@@ -1,0 +1,10 @@
+#!/Users/miles/higher_ed_interactive/venv/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'sunlight==1.2.8','console_scripts','sunlight'
+__requires__ = 'sunlight==1.2.8'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('sunlight==1.2.8', 'console_scripts', 'sunlight')()
+    )
