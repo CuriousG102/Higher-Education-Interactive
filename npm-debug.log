@@ -1,9 +1,13 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'topojson' ]
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'http-server',
+1 verbose cli   '-g' ]
 2 info using npm@1.4.28
-3 info using node@v0.10.33
-4 verbose cache add [ 'topojson', null ]
-5 verbose cache add name=undefined spec="topojson" args=["topojson",null]
+3 info using node@v0.10.35
+4 verbose cache add [ 'http-server', null ]
+5 verbose cache add name=undefined spec="http-server" args=["http-server",null]
 6 verbose parsed url { protocol: null,
 6 verbose parsed url   slashes: null,
 6 verbose parsed url   auth: null,
@@ -13,225 +17,175 @@
 6 verbose parsed url   hash: null,
 6 verbose parsed url   search: null,
 6 verbose parsed url   query: null,
-6 verbose parsed url   pathname: 'topojson',
-6 verbose parsed url   path: 'topojson',
-6 verbose parsed url   href: 'topojson' }
-7 silly lockFile 947c2103-topojson topojson
-8 verbose lock topojson /Users/miles/.npm/947c2103-topojson.lock
-9 silly lockFile 947c2103-topojson topojson
-10 silly lockFile 947c2103-topojson topojson
-11 verbose addNamed [ 'topojson', '' ]
+6 verbose parsed url   pathname: 'http-server',
+6 verbose parsed url   path: 'http-server',
+6 verbose parsed url   href: 'http-server' }
+7 silly lockFile ed608307-http-server http-server
+8 verbose lock http-server /Users/miles/.npm/ed608307-http-server.lock
+9 silly lockFile ed608307-http-server http-server
+10 silly lockFile ed608307-http-server http-server
+11 verbose addNamed [ 'http-server', '' ]
 12 verbose addNamed [ null, '*' ]
-13 silly lockFile 7edf76d6-topojson topojson@
-14 verbose lock topojson@ /Users/miles/.npm/7edf76d6-topojson.lock
-15 silly addNameRange { name: 'topojson', range: '*', hasData: false }
-16 verbose request where is /topojson
+13 silly lockFile 550353c6-http-server http-server@
+14 verbose lock http-server@ /Users/miles/.npm/550353c6-http-server.lock
+15 silly addNameRange { name: 'http-server', range: '*', hasData: false }
+16 verbose request where is /http-server
 17 verbose request registry https://registry.npmjs.org/
-18 verbose request id 013687505b54e161
-19 verbose url raw /topojson
-20 verbose url resolving [ 'https://registry.npmjs.org/', './topojson' ]
-21 verbose url resolved https://registry.npmjs.org/topojson
-22 verbose request where is https://registry.npmjs.org/topojson
-23 info trying registry request attempt 1 at 23:52:35
-24 http GET https://registry.npmjs.org/topojson
-25 http 200 https://registry.npmjs.org/topojson
+18 verbose request id bb5c53ca6d6631fe
+19 verbose url raw /http-server
+20 verbose url resolving [ 'https://registry.npmjs.org/', './http-server' ]
+21 verbose url resolved https://registry.npmjs.org/http-server
+22 verbose request where is https://registry.npmjs.org/http-server
+23 info trying registry request attempt 1 at 01:27:14
+24 http GET https://registry.npmjs.org/http-server
+25 http 200 https://registry.npmjs.org/http-server
 26 silly registry.get cb [ 200,
-26 silly registry.get   { date: 'Sat, 24 Jan 2015 05:52:36 GMT',
+26 silly registry.get   { date: 'Sat, 24 Jan 2015 07:27:15 GMT',
 26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-26 silly registry.get     etag: '"O8RJE4U87MAPUHQ1DV6H1TTP"',
+26 silly registry.get     etag: '"4Z1R7XM9B6JAZWUJX2VOQQ01U"',
 26 silly registry.get     'content-type': 'application/json',
 26 silly registry.get     'cache-control': 'max-age=60',
-26 silly registry.get     'content-length': '85802',
+26 silly registry.get     'content-length': '40165',
 26 silly registry.get     'accept-ranges': 'bytes',
 26 silly registry.get     via: '1.1 varnish',
 26 silly registry.get     age: '0',
-26 silly registry.get     'x-served-by': 'cache-dfw1823-DFW',
+26 silly registry.get     'x-served-by': 'cache-dfw1834-DFW',
 26 silly registry.get     'x-cache': 'MISS',
 26 silly registry.get     'x-cache-hits': '0',
-26 silly registry.get     'x-timer': 'S1422078756.344021,VS0,VE159',
+26 silly registry.get     'x-timer': 'S1422084434.984584,VS0,VE221',
 26 silly registry.get     vary: 'Accept',
 26 silly registry.get     'keep-alive': 'timeout=10, max=50',
 26 silly registry.get     connection: 'Keep-Alive' } ]
-27 silly addNameRange number 2 { name: 'topojson', range: '*', hasData: true }
-28 silly addNameRange versions [ 'topojson',
-28 silly addNameRange   [ '0.0.1',
-28 silly addNameRange     '0.0.2',
-28 silly addNameRange     '0.0.4',
-28 silly addNameRange     '0.0.5',
-28 silly addNameRange     '0.0.6',
-28 silly addNameRange     '0.0.7',
-28 silly addNameRange     '0.0.8',
-28 silly addNameRange     '0.0.9',
-28 silly addNameRange     '0.0.10',
-28 silly addNameRange     '0.0.11',
-28 silly addNameRange     '0.0.12',
-28 silly addNameRange     '0.0.13',
-28 silly addNameRange     '0.0.14',
-28 silly addNameRange     '0.0.15',
-28 silly addNameRange     '0.0.16',
-28 silly addNameRange     '0.0.17',
-28 silly addNameRange     '0.0.18',
-28 silly addNameRange     '0.0.19',
-28 silly addNameRange     '0.0.20',
-28 silly addNameRange     '0.0.21',
-28 silly addNameRange     '0.0.23',
-28 silly addNameRange     '0.0.24',
-28 silly addNameRange     '0.0.25',
-28 silly addNameRange     '0.0.26',
-28 silly addNameRange     '0.0.27',
-28 silly addNameRange     '0.0.28',
-28 silly addNameRange     '0.0.29',
-28 silly addNameRange     '0.0.30',
-28 silly addNameRange     '0.0.31',
-28 silly addNameRange     '0.0.32',
-28 silly addNameRange     '0.0.33',
-28 silly addNameRange     '0.0.34',
-28 silly addNameRange     '0.0.35',
-28 silly addNameRange     '0.0.36',
-28 silly addNameRange     '0.0.37',
-28 silly addNameRange     '0.0.38',
-28 silly addNameRange     '0.0.39',
-28 silly addNameRange     '1.0.0',
-28 silly addNameRange     '1.1.0',
-28 silly addNameRange     '1.1.1',
-28 silly addNameRange     '1.1.2',
-28 silly addNameRange     '1.1.3',
-28 silly addNameRange     '1.1.4',
-28 silly addNameRange     '1.1.5',
-28 silly addNameRange     '1.1.6',
-28 silly addNameRange     '1.2.0',
-28 silly addNameRange     '1.2.1',
-28 silly addNameRange     '1.2.2',
-28 silly addNameRange     '1.2.3',
-28 silly addNameRange     '1.3.0',
-28 silly addNameRange     '1.4.0',
-28 silly addNameRange     '1.4.1',
-28 silly addNameRange     '1.4.2',
-28 silly addNameRange     '1.4.3',
-28 silly addNameRange     '1.4.4',
-28 silly addNameRange     '1.4.5',
-28 silly addNameRange     '1.4.6',
-28 silly addNameRange     '1.4.7',
-28 silly addNameRange     '1.4.8',
-28 silly addNameRange     '1.4.9',
-28 silly addNameRange     '1.5.0',
-28 silly addNameRange     '1.5.1',
-28 silly addNameRange     '1.5.2',
-28 silly addNameRange     '1.5.3',
-28 silly addNameRange     '1.5.4',
-28 silly addNameRange     '1.6.0',
-28 silly addNameRange     '1.6.1',
-28 silly addNameRange     '1.6.2',
-28 silly addNameRange     '1.6.3',
-28 silly addNameRange     '1.6.4',
-28 silly addNameRange     '1.6.5',
-28 silly addNameRange     '1.6.6',
-28 silly addNameRange     '1.6.7',
-28 silly addNameRange     '1.6.8',
-28 silly addNameRange     '1.6.9',
-28 silly addNameRange     '1.6.10',
-28 silly addNameRange     '1.6.11',
-28 silly addNameRange     '1.6.12',
-28 silly addNameRange     '1.6.13',
-28 silly addNameRange     '1.6.14',
-28 silly addNameRange     '1.6.15',
-28 silly addNameRange     '1.6.16',
-28 silly addNameRange     '1.6.17',
-28 silly addNameRange     '1.6.18' ] ]
-29 verbose addNamed [ 'topojson', '1.6.18' ]
-30 verbose addNamed [ '1.6.18', '1.6.18' ]
-31 silly lockFile 6242d4b4-topojson-1-6-18 topojson@1.6.18
-32 verbose lock topojson@1.6.18 /Users/miles/.npm/6242d4b4-topojson-1-6-18.lock
-33 silly lockFile f7eccd83-org-topojson-topojson-1-6-18-tgz https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz
-34 verbose lock https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz /Users/miles/.npm/f7eccd83-org-topojson-topojson-1-6-18-tgz.lock
-35 verbose addRemoteTarball [ 'https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz',
-35 verbose addRemoteTarball   '23f4284a605aaf813d22d7a825903f0d8757007a' ]
-36 info retry fetch attempt 1 at 23:52:36
-37 verbose fetch to= /var/folders/0_/xxd9d03n3kd4y1yz6wywwpg40000gn/T/npm-6741-sDJvNj0w/registry.npmjs.org/topojson/-/topojson-1.6.18.tgz
-38 http GET https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz
-39 http 200 https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz
-40 silly lockFile f7eccd83-org-topojson-topojson-1-6-18-tgz https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz
-41 silly lockFile f7eccd83-org-topojson-topojson-1-6-18-tgz https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz
-42 silly lockFile 6242d4b4-topojson-1-6-18 topojson@1.6.18
-43 silly lockFile 6242d4b4-topojson-1-6-18 topojson@1.6.18
-44 silly lockFile 7edf76d6-topojson topojson@
-45 silly lockFile 7edf76d6-topojson topojson@
-46 silly resolved [ { name: 'topojson',
-46 silly resolved     version: '1.6.18',
-46 silly resolved     description: 'An extension to GeoJSON that encodes topology.',
-46 silly resolved     keywords: [ 'geojson', 'shapefile' ],
-46 silly resolved     author: { name: 'Mike Bostock', url: 'http://bost.ocks.org/mike' },
-46 silly resolved     repository: { type: 'git', url: 'https://github.com/mbostock/topojson.git' },
-46 silly resolved     main: 'index.js',
-46 silly resolved     browser: 'topojson.js',
+27 silly addNameRange number 2 { name: 'http-server', range: '*', hasData: true }
+28 silly addNameRange versions [ 'http-server',
+28 silly addNameRange   [ '0.1.0',
+28 silly addNameRange     '0.1.1',
+28 silly addNameRange     '0.1.3',
+28 silly addNameRange     '0.2.1',
+28 silly addNameRange     '0.2.2',
+28 silly addNameRange     '0.2.3',
+28 silly addNameRange     '0.2.4',
+28 silly addNameRange     '0.2.5',
+28 silly addNameRange     '0.2.6',
+28 silly addNameRange     '0.2.9',
+28 silly addNameRange     '0.3.0',
+28 silly addNameRange     '0.4.0',
+28 silly addNameRange     '0.4.1',
+28 silly addNameRange     '0.5.0',
+28 silly addNameRange     '0.5.1',
+28 silly addNameRange     '0.5.2',
+28 silly addNameRange     '0.5.3',
+28 silly addNameRange     '0.5.5',
+28 silly addNameRange     '0.6.0',
+28 silly addNameRange     '0.6.1',
+28 silly addNameRange     '0.7.0',
+28 silly addNameRange     '0.7.1',
+28 silly addNameRange     '0.7.2',
+28 silly addNameRange     '0.7.3',
+28 silly addNameRange     '0.7.4' ] ]
+29 verbose addNamed [ 'http-server', '0.7.4' ]
+30 verbose addNamed [ '0.7.4', '0.7.4' ]
+31 silly lockFile f9914dcb-http-server-0-7-4 http-server@0.7.4
+32 verbose lock http-server@0.7.4 /Users/miles/.npm/f9914dcb-http-server-0-7-4.lock
+33 silly lockFile ecf58082-ttp-server-http-server-0-7-4-tgz https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz
+34 verbose lock https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz /Users/miles/.npm/ecf58082-ttp-server-http-server-0-7-4-tgz.lock
+35 verbose addRemoteTarball [ 'https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz',
+35 verbose addRemoteTarball   '6c23ea345d7db567a91f772924d2de6226b3f4cd' ]
+36 info retry fetch attempt 1 at 01:27:15
+37 verbose fetch to= /var/folders/0_/xxd9d03n3kd4y1yz6wywwpg40000gn/T/npm-7354-tz-Z1lEQ/registry.npmjs.org/http-server/-/http-server-0.7.4.tgz
+38 http GET https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz
+39 http 200 https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz
+40 silly lockFile ecf58082-ttp-server-http-server-0-7-4-tgz https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz
+41 silly lockFile ecf58082-ttp-server-http-server-0-7-4-tgz https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz
+42 silly lockFile f9914dcb-http-server-0-7-4 http-server@0.7.4
+43 silly lockFile f9914dcb-http-server-0-7-4 http-server@0.7.4
+44 silly lockFile 550353c6-http-server http-server@
+45 silly lockFile 550353c6-http-server http-server@
+46 silly resolved [ { name: 'http-server',
+46 silly resolved     version: '0.7.4',
+46 silly resolved     description: 'a simple zero-configuration command-line http server',
+46 silly resolved     main: './lib/http-server',
+46 silly resolved     repository:
+46 silly resolved      { type: 'git',
+46 silly resolved        url: 'git://github.com/nodeapps/http-server.git' },
+46 silly resolved     keywords: [ 'cli', 'command' ],
+46 silly resolved     scripts:
+46 silly resolved      { start: 'node ./bin/http-server',
+46 silly resolved        pretest: 'stylezero bin/ lib/ test',
+46 silly resolved        test: 'vows --spec --isolate' },
+46 silly resolved     contributors:
+46 silly resolved      [ [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object],
+46 silly resolved        [Object] ],
 46 silly resolved     dependencies:
-46 silly resolved      { d3: '3',
-46 silly resolved        'd3-geo-projection': '0.2',
-46 silly resolved        optimist: '0.3',
-46 silly resolved        'queue-async': '1.0',
-46 silly resolved        rw: '0.1',
-46 silly resolved        shapefile: '0.3' },
-46 silly resolved     devDependencies:
-46 silly resolved      { vows: '0.7',
-46 silly resolved        'uglify-js': '2',
-46 silly resolved        'us-atlas': '0.0',
-46 silly resolved        'world-atlas': '0.0' },
-46 silly resolved     bin:
-46 silly resolved      { topojson: './bin/topojson',
-46 silly resolved        'topojson-geojson': './bin/topojson-geojson',
-46 silly resolved        'topojson-group': './bin/topojson-group',
-46 silly resolved        'topojson-merge': './bin/topojson-merge',
-46 silly resolved        'topojson-svg': './bin/topojson-svg' },
-46 silly resolved     scripts: { test: 'vows; echo' },
-46 silly resolved     gitHead: '834e274f0f08622cc8f76dbfdb3417dd3a716236',
-46 silly resolved     bugs: { url: 'https://github.com/mbostock/topojson/issues' },
-46 silly resolved     homepage: 'https://github.com/mbostock/topojson',
-46 silly resolved     _id: 'topojson@1.6.18',
-46 silly resolved     _shasum: '23f4284a605aaf813d22d7a825903f0d8757007a',
-46 silly resolved     _from: 'topojson@',
-46 silly resolved     _npmVersion: '2.0.0-alpha-5',
-46 silly resolved     _npmUser: { name: 'mbostock', email: 'mbostock@gmail.com' },
-46 silly resolved     maintainers: [ [Object], [Object] ],
+46 silly resolved      { colors: '1.0.3',
+46 silly resolved        optimist: '0.6.x',
+46 silly resolved        union: '~0.4.3',
+46 silly resolved        ecstatic: '~0.5.6',
+46 silly resolved        portfinder: '0.2.x',
+46 silly resolved        opener: '~1.4.0' },
+46 silly resolved     devDependencies: { vows: '0.7.x', request: '2.49.x', stylezero: '2.1.1' },
+46 silly resolved     bugs: { url: 'https://github.com/nodeapps/http-server/issues' },
+46 silly resolved     licenses: [ [Object] ],
+46 silly resolved     analyze: false,
+46 silly resolved     preferGlobal: 'true',
+46 silly resolved     bin: { 'http-server': './bin/http-server', hs: './bin/http-server' },
+46 silly resolved     gitHead: '4407db12d676a948eef7a2262490bdda4e07b3e9',
+46 silly resolved     homepage: 'https://github.com/nodeapps/http-server',
+46 silly resolved     _id: 'http-server@0.7.4',
+46 silly resolved     _shasum: '6c23ea345d7db567a91f772924d2de6226b3f4cd',
+46 silly resolved     _from: 'http-server@',
+46 silly resolved     _npmVersion: '2.1.9',
+46 silly resolved     _nodeVersion: '0.10.33',
+46 silly resolved     _npmUser: { name: 'indexzero', email: 'charlie.robbins@gmail.com' },
+46 silly resolved     maintainers: [ [Object] ],
 46 silly resolved     dist:
-46 silly resolved      { shasum: '23f4284a605aaf813d22d7a825903f0d8757007a',
-46 silly resolved        tarball: 'http://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz' },
+46 silly resolved      { shasum: '6c23ea345d7db567a91f772924d2de6226b3f4cd',
+46 silly resolved        tarball: 'http://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz' },
 46 silly resolved     directories: {},
-46 silly resolved     _resolved: 'https://registry.npmjs.org/topojson/-/topojson-1.6.18.tgz' } ]
-47 info install topojson@1.6.18 into /usr/local/lib
-48 info installOne topojson@1.6.18
-49 verbose lib/node_modules/topojson unbuild
-50 verbose tar unpack /Users/miles/.npm/topojson/1.6.18/package.tgz
-51 silly lockFile 48c3cdf9--local-lib-node-modules-topojson tar:///usr/local/lib/node_modules/topojson
-52 verbose lock tar:///usr/local/lib/node_modules/topojson /Users/miles/.npm/48c3cdf9--local-lib-node-modules-topojson.lock
-53 silly lockFile 2e8fac45--npm-topojson-1-6-18-package-tgz tar:///Users/miles/.npm/topojson/1.6.18/package.tgz
-54 verbose lock tar:///Users/miles/.npm/topojson/1.6.18/package.tgz /Users/miles/.npm/2e8fac45--npm-topojson-1-6-18-package-tgz.lock
+46 silly resolved     _resolved: 'https://registry.npmjs.org/http-server/-/http-server-0.7.4.tgz' } ]
+47 info install http-server@0.7.4 into /usr/local/lib
+48 info installOne http-server@0.7.4
+49 verbose lib/node_modules/http-server unbuild
+50 verbose tar unpack /Users/miles/.npm/http-server/0.7.4/package.tgz
+51 silly lockFile c2cc12bc-cal-lib-node-modules-http-server tar:///usr/local/lib/node_modules/http-server
+52 verbose lock tar:///usr/local/lib/node_modules/http-server /Users/miles/.npm/c2cc12bc-cal-lib-node-modules-http-server.lock
+53 silly lockFile 23683cf7-pm-http-server-0-7-4-package-tgz tar:///Users/miles/.npm/http-server/0.7.4/package.tgz
+54 verbose lock tar:///Users/miles/.npm/http-server/0.7.4/package.tgz /Users/miles/.npm/23683cf7-pm-http-server-0-7-4-package-tgz.lock
 55 silly gunzTarPerm modes [ '755', '644' ]
-56 error Error: EACCES, mkdir '/usr/local/lib/node_modules/topojson'
-56 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/topojson']
+56 error Error: EACCES, mkdir '/usr/local/lib/node_modules/http-server'
+56 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/http-server']
 56 error   errno: 3,
 56 error   code: 'EACCES',
-56 error   path: '/usr/local/lib/node_modules/topojson',
+56 error   path: '/usr/local/lib/node_modules/http-server',
 56 error   fstream_type: 'Directory',
-56 error   fstream_path: '/usr/local/lib/node_modules/topojson',
+56 error   fstream_path: '/usr/local/lib/node_modules/http-server',
 56 error   fstream_class: 'DirWriter',
 56 error   fstream_stack:
 56 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
 56 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
-56 error      'Object.oncomplete (fs.js:107:15)' ] }
+56 error      'Object.oncomplete (fs.js:108:15)' ] }
 57 error Please try running this command again as root/Administrator.
 58 error System Darwin 14.0.0
-59 error command "node" "/usr/local/bin/npm" "install" "-g" "topojson"
+59 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "http-server" "-g"
 60 error cwd /Users/miles/higher_ed_interactive
-61 error node -v v0.10.33
+61 error node -v v0.10.35
 62 error npm -v 1.4.28
-63 error path /usr/local/lib/node_modules/topojson
-64 error fstream_path /usr/local/lib/node_modules/topojson
+63 error path /usr/local/lib/node_modules/http-server
+64 error fstream_path /usr/local/lib/node_modules/http-server
 65 error fstream_type Directory
 66 error fstream_class DirWriter
 67 error code EACCES
 68 error errno 3
-69 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/topojson'
+69 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/http-server'
 70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
 70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
-70 error fstream_stack Object.oncomplete (fs.js:107:15)
+70 error fstream_stack Object.oncomplete (fs.js:108:15)
 71 verbose exit [ 3, true ]

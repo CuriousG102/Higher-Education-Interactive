@@ -12,17 +12,27 @@
 	cursor: pointer;
 }
 .district.active {
-	fill: orange;
+	fill: purple;
 }
 
 .district:hover {
-	fill: red;
+	fill: orange;
 }
 .mesh {
 	fill: none;
 	stroke: #fff;
 	stroke-linecap: round;
 	stroke-linejoin: round;
+}
+.district_no {
+	fill: white;
+	pointer-events: none;
+}
+.Republican {
+	fill: red;
+}
+.Democratic {
+	fill: blue;
 }
 
 </style>
@@ -55,9 +65,20 @@ svg.append("rect")
 var g = svg.append("g")
     .style("stroke-width", "1.5px");
 
-d3.json("senate.json", function(error, senate) {
+function font_size_selection(d) {
+	var largest_font_size = 14;
+	var area = path.area(d);
+	if (area > 2800) {return largest_font_size + "pt";}
+	else {
+		return Math.ceil((area/2800) * largest_font_size) + "pt";
+	}
+}
+
+d3.json("enhanced.json", function(error, senate) {
 	if (error) return console.error(error);
+	console.log(senate);
 	geoJSON = topojson.feature(senate, senate.objects.senate);
+	console.log(geoJSON);
 
 	var b = path.bounds(geoJSON),
 		s = .95 / Math.max((b[1][0] - b[0][0]) / width,
@@ -73,9 +94,21 @@ d3.json("senate.json", function(error, senate) {
 		.data(geoJSON.features)
 	  .enter().append("path")
 	   	.attr("d", path)
-	   	.attr("class", "district")
+	   	.attr("class", function(d) {
+	   		if (d.properties.legislator === undefined) return "district";
+	   		return "district " + d.properties.legislator.party;
+	   	})
 	   	.on("click", clicked);
 
+	g.selectAll("text")
+		.data(geoJSON.features)
+	  .enter().append("text")
+	  	.text(function(d) { return d.id ;})
+	  	.attr("x", function(d) { return path.centroid(d)[0]; })
+	  	.attr("y", function(d) { return path.centroid(d)[1]; })
+	  	.attr("text-anchor", "middle")
+	  	.attr("font-size", font_size_selection)
+	  	.attr("class", "district_no");
 
 	g.append("path")
 		.datum(topojson.mesh(senate, 
@@ -118,3 +151,4 @@ function reset() {
 }
 
 </script>
+</body>
