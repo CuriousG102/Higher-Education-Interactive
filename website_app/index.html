@@ -138,6 +138,30 @@ function clicked(d) {
 		.duration(750)
 		.style("stroke-width", 1.5 / scale + "px")
 		.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+
+	console.log(d.properties.legislator);
+	var legislator = d.properties.legislator;
+	var infoPanel = d3.select(".InfoPanel");
+	infoPanel.select("#senatorName")
+	         .select("p")
+	         .text(legislator.full_name);
+	/*
+	billPrep = 
+	var bills = infoPanel.select("#bills")
+						 .select("ul")
+						 .selectAll(".bill");
+						 .data()
+	*/
+	infoPanel.select("#districtNo")
+			 .select("p")
+			 .text(legislator.district);
+	infoPanel.select("#districtOffice")
+			 .select("p")
+			 .text(legislator.offices[1].address);
+	infoPanel.select("#party")
+			 .select("p")
+			 .text(legislator.party);
+
 }
 
 function reset() {
@@ -151,4 +175,31 @@ function reset() {
 }
 
 </script>
+<div class="InfoPanel">
+	<div id="senatorName">
+		<h1>Senator Name: </h1><p></p>
+	</div>
+	<div id="bills">
+		<h1>Bills from the 84th Session: </h1>
+		<!-- <ul>'s here -->
+	</div>
+	<div id="districtNo">
+		<h1>District Number: </h1><p></p>
+	</div>
+	<div id="districtOffice">
+		<h1>District Office: </h1>
+		<p></p>
+	</div>
+	<div id="party">
+		<h1>Party: </h1><p></p>
+	</div>
+	<div id="committees">
+		<h1>Committees:</h1>
+		<ul>
+		</ul>
+	</div>
+	<div id="higherEd">
+		<h1>Higher Education: </h1><p></p>
+	</div>
+</div>
 </body>
