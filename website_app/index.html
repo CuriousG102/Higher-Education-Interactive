@@ -120,7 +120,23 @@ d3.json("enhanced.json", function(error, senate) {
 
 });
 
+function appendPrimary(error, primaryBill) {
+	appendBill(primaryBill, '#primaryBills');
+}
+
+function appendCosponsor(error, cosponsorBill) {
+	appendBill(cosponsorBill, '#cosponsorBills');
+}
+
+function appendBill(bill, idSelector) {
+	d3.select(idSelector)
+	  .append("li")
+	  .attr("class", "bill")
+	  .text(bill.title);
+}
+
 function clicked(d) {
+	d3.select(".bill").remove();
 	if (active.node() === this) return reset();
 	active.classed("active", false);
 	active = d3.select(this).classed("active", true);
@@ -146,19 +162,27 @@ function clicked(d) {
 	         .select("p")
 	         .text(legislator.full_name);
 
-	if (higher_ed_bills) {
+	// need to make this if statement better by deferring action of 
+	// adding bills to elements until all bills have loaded.
+	// This will enable things like sorting bills by title
+	// We will use https://github.com/mbostock/queue
+	if (d.properties.legislator.higher_ed_bills) {
 		var primaryBills;
 		var cosponsorBills;
+		var higher_ed_bills = d.properties.legislator.higher_ed_bills;
 		if (higher_ed_bills.primary) {
 			primaryBills=higher_ed_bills.primary;
 		} else { primaryBills = [];}
 		if (higher_ed_bills.cosponsor) {
 			cosponsorBills=higher_ed_bills.cosponsor;
 		} else { cosponsorBills = [];}
-		var bills = infoPanel.select("#bills")
-							 .select("ul")
-							 .selectAll(".bill");
-							 .data()
+
+		for (var i = 0; i < primaryBills.length; i++) {
+			d3.json('bills/' + primaryBills[i] + '.json', appendPrimary);
+		}
+		for (var i = 0; i < cosponsorBills.length; i++) {
+			d3.json('bills/' + cosponsorBills[i] + '.json', appendCosponsor);
+		}
 	}
 
 	infoPanel.select("#districtNo")
@@ -170,6 +194,7 @@ function clicked(d) {
 	infoPanel.select("#party")
 			 .select("p")
 			 .text(legislator.party);
+	
 
 }
 
