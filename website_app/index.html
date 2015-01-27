@@ -145,13 +145,22 @@ function clicked(d) {
 	infoPanel.select("#senatorName")
 	         .select("p")
 	         .text(legislator.full_name);
-	/*
-	billPrep = 
-	var bills = infoPanel.select("#bills")
-						 .select("ul")
-						 .selectAll(".bill");
-						 .data()
-	*/
+
+	if (higher_ed_bills) {
+		var primaryBills;
+		var cosponsorBills;
+		if (higher_ed_bills.primary) {
+			primaryBills=higher_ed_bills.primary;
+		} else { primaryBills = [];}
+		if (higher_ed_bills.cosponsor) {
+			cosponsorBills=higher_ed_bills.cosponsor;
+		} else { cosponsorBills = [];}
+		var bills = infoPanel.select("#bills")
+							 .select("ul")
+							 .selectAll(".bill");
+							 .data()
+	}
+
 	infoPanel.select("#districtNo")
 			 .select("p")
 			 .text(legislator.district);
@@ -181,7 +190,8 @@ function reset() {
 	</div>
 	<div id="bills">
 		<h1>Bills from the 84th Session: </h1>
-		<!-- <ul>'s here -->
+		<ul id="primaryBills"></ul>
+		<ul id="cosponsorBills"></ul>
 	</div>
 	<div id="districtNo">
 		<h1>District Number: </h1><p></p>

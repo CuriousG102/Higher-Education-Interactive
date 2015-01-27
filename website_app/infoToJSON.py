@@ -31,12 +31,15 @@ def produceBillJSONFiles(files_destination):
         os.makedirs(files_destination)
 
     for bill in bills:
-        filePath = os.path.join(files_destination, bill['id'] + '.json')
-        with io.open(filePath, mode='w', encoding='utf8') as f:
-            jsonDump = json.dumps(obj=bill, 
-                                  ensure_ascii=False, 
-                                  separators=(',',':'))
-            f.write(jsonDump)
+        for subject in bill['scraped_subjects']:
+            if 'Education--Higher' in subject:
+                filePath = os.path.join(files_destination, bill['id'] + '.json')
+                with io.open(filePath, mode='w', encoding='utf8') as f:
+                    jsonDump = json.dumps(obj=bill, 
+                                          ensure_ascii=False, 
+                                          separators=(',',':'))
+                    f.write(jsonDump)
+                break
 
 
 
@@ -58,6 +61,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
         for subject in bill['scraped_subjects']:
             if 'Education--Higher' in subject:
                 addSponsorsToSet(legislator_id_set, bill)
+                break
 
     decoder = json.JSONDecoder()
     geoJSON = decoder.decode(geoJSONString)
