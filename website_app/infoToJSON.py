@@ -1,4 +1,6 @@
 import json
+import os
+import io
 
 from sunlight import openstates
 import sunlight
@@ -6,6 +8,37 @@ import sunlight
 import settings
 
 sunlight.config.API_KEY = settings.API_KEY
+
+def produceBillJSONFiles(files_destination):
+    bill_fields = "bill_id,title,alternate_titles,action_dates,actions,chamber,\
+    updated_at,id,scraped_subjects,type,versions,votes"
+
+    # bills = openstates.bills(state="tx", search_window="session",
+    #                          fields=bill_fields)
+    bills = []
+    pageNo = 1
+
+    while True:
+        billsToAdd = openstates.bills(state="tx", search_window="session",
+                                      fields=bill_fields, page=pageNo)
+        if len(billsToAdd) == 0:
+            break
+
+        bills.extend(billsToAdd)
+        pageNo += 1
+
+    if not os.path.exists(files_destination):
+        os.makedirs(files_destination)
+
+    for bill in bills:
+        filePath = os.path.join(files_destination, bill['id'] + '.json')
+        with io.open(filePath, mode='w', encoding='utf8') as f:
+            jsonDump = json.dumps(obj=bill, 
+                                  ensure_ascii=False, 
+                                  separators=(',',':'))
+            f.write(jsonDump)
+
+
 
 def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
     leg_fields = "full_name,district,offices,party,roles,leg_id,photo_url"
