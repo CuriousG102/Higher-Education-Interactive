@@ -194,8 +194,14 @@ function clicked(d) {
 	infoPanel.select("#party")
 			 .select("p")
 			 .text(legislator.party);
-	
-
+	var committees = infoPanel.select("#committees")
+			                 .select("ul")
+			                 .selectAll("li")
+			 				 .data(legislator.roles.slice(1, legislator.roles.length));
+	committees.enter()
+			  .append("li")
+              .text(function(d) { return d.committee; });
+    committees.exit().remove();
 }
 
 function reset() {
