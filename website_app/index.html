@@ -11,11 +11,16 @@
 	</div>
 	<div id="map"></div>
 	<div id="panel">
+		<img id="portrait"/>
+		<div class="information">
+			<h1 id="name">asd</h1>
+			<h2 id="party">asdhasdh</h2>
+			<h4 id="address"></h4>
+		</div>
+
 		<div id="close"></div>
 	</div>
 	<div id="republican-list" class="column"></div>
-	<!-- <div class="map"></div> -->
-	<!-- <div class="column">a</div> -->
 
 	<!-- <div class="InfoPanel">
 		<div id="senatorName">
@@ -119,10 +124,12 @@
 		.data(democrat)
 		.enter().append("div")
 		.attr("class", "list-item")
-		.html(function(d){ return d.district + " " + d.full_name});
+		.html(function(d){ return d.district + " " + d.full_name})
+		.on("click", dropdown);
 
 		d3.select("#close")
 		.on("click", close);
+
 
 		// var b = path.bounds(geoJSON),
 		// s = .95 / Math.max((b[1][0] - b[0][0]) / width,
@@ -163,11 +170,24 @@
 
 	});
 
-	function dropdown() {
+	function dropdown(d) {
 		d3.select("#panel")
 		.transition()
 		.duration(750)
 		.style("top", "50px");
+
+		d3.select("#portrait")
+		.attr("src", d.photo_url);
+
+		d3.select("#name")
+		.html(d.full_name);
+
+		d3.select("#party")
+		.html(d.party);
+
+		console.log(d.offices[0]);
+		d3.select("#address")
+		.html(d.offices[0].address);
 	}
 
 	function close() {

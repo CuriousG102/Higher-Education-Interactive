@@ -131,6 +131,7 @@ html, body{
 	margin: 50px 0 0 0;
 	background-color: #FC913A;
 	float: left;
+	overflow: scroll;
 }
 
 .list-item {
@@ -139,7 +140,6 @@ html, body{
 	padding: 4px;
 	background-color: #EDE574;
 	font-family: "Helvetica Neue", Helvetica, Sans-serif;
-	/*cursor: pointer;*/
 	border-bottom: 2px solid black;
 	text-align: center;
 }
@@ -148,9 +148,23 @@ html, body{
 	width: 50px;
 	height: 50px;
 	background-color: #F9D423;
+	position: absolute;
+	top: 0;
+	right: 0;
+
 }
 
+#portrait {
+	width: 200px;
+	height: 200px;
+	border-radius: 100px;
+	margin: 10px auto;
+	display: block;
+}
 
+.information {
+	text-align: center;
+}
 
 
 
