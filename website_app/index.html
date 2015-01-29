@@ -129,6 +129,7 @@ function appendCosponsor(error, cosponsorBill) {
 }
 
 function appendBill(bill, idSelector) {
+	console.log(bill);
 	d3.select(idSelector)
 	  .append("li")
 	  .attr("class", "bill")

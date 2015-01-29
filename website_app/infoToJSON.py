@@ -13,7 +13,7 @@ def produceBillJSONFiles(files_destination):
     bill_fields = "bill_id,title,alternate_titles,action_dates,actions,chamber,\
     updated_at,id,scraped_subjects,type,versions,votes"
 
-    # bills = openstates.bills(state="tx", search_window="session",
+    # bills = openstates.bills(state="tx", search_window="session:83",
     #                          fields=bill_fields)
     bills = []
     pageNo = 1
