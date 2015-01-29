@@ -19,7 +19,7 @@ def produceBillJSONFiles(files_destination):
     pageNo = 1
 
     while True:
-        billsToAdd = openstates.bills(state="tx", search_window="session",
+        billsToAdd = openstates.bills(state="tx", search_window="session:83",
                                       fields=bill_fields, page=pageNo)
         if len(billsToAdd) == 0:
             break
