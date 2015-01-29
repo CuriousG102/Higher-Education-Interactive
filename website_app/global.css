@@ -87,3 +87,51 @@ Global Styling
 .Democratic {
 	fill: blue;
 }
+
+html, body{
+	height: 100%;
+}
+
+.top {
+	height: 50px;
+	width: 100%;
+	background-color: black;
+	position: absolute;
+}
+
+.map {
+	width: 70%;
+	height: calc(100% - 50px);
+	margin: 50px 0 0 0;
+	background-color: #FF4E50;
+	float: left;
+}
+
+.column {
+	width: 15%;
+	height: calc(100% - 50px);
+	margin: 50px 0 0 0;
+	background-color: #FC913A;
+	float: left;
+}
+
+.list-item {
+	width: 100%;
+	height: 20px;
+	margin: 1px 0;
+	background-color: #EDE574;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
