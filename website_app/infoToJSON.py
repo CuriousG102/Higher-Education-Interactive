@@ -55,7 +55,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
 
 
     bill_fields = "id,sponsors,scraped_subjects"
-    bills = openstates.bills(state="tx", search_window="session", 
+    bills = openstates.bills(state="tx", search_window="session:83", 
                              fields=bill_fields)
     for bill in bills:
         for subject in bill['scraped_subjects']:
