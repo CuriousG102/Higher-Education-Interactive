@@ -44,10 +44,22 @@ def produceBillJSONFiles(files_destination):
 
 
 def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
-    leg_fields = "full_name,district,offices,party,roles,leg_id,photo_url"
-    legislators = openstates.legislators(state="tx", active=True, 
+    leg_fields = "full_name,district,offices,party,roles,leg_id,photo_url,old_roles"
+    legislators = openstates.legislators(state="tx", active=False, 
                                          chamber=chamber_string,
                                          fields=leg_fields)
+    
+    # filter for test data
+    f_real_legislators = []
+    for legislator in legislators:
+        try:
+            if '83' in legislator['old_roles']:
+                f_real_legislators.append(legislator)
+        except:
+            pass
+    legislators = f_real_legislators
+
+
     legislator_id_set={}
 
     for legislator in legislators:
@@ -55,8 +67,18 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
 
 
     bill_fields = "id,sponsors,scraped_subjects"
-    bills = openstates.bills(state="tx", search_window="session:83", 
-                             fields=bill_fields)
+    bills = []
+    pageNo = 1
+
+    while True:
+        billsToAdd = openstates.bills(state="tx", search_window="session:83",
+                                      fields=bill_fields, page=pageNo)
+        if len(billsToAdd) == 0:
+            break
+
+        bills.extend(billsToAdd)
+        pageNo += 1
+        
     for bill in bills:
         for subject in bill['scraped_subjects']:
             if 'Education--Higher' in subject:
