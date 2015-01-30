@@ -13,43 +13,15 @@
 	<div id="panel">
 		<img id="portrait"/>
 		<div class="information">
-			<h1 id="name">asd</h1>
-			<h2 id="party">asdhasdh</h2>
+			<h1 id="name"></h1>
+			<h2 id="party"></h2>
 			<h4 id="address"></h4>
 		</div>
-
-		<div id="close"></div>
+		<div class="bills" id="primary"></div>
+		<div class="bills" id="cosponsor"></div>
+		<div id="close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
 	</div>
 	<div id="republican-list" class="column"></div>
-
-	<!-- <div class="InfoPanel">
-		<div id="senatorName">
-			<h1>Senator Name: </h1><p></p>
-		</div>
-		<div id="bills">
-			<h1>Bills from the 84th Session: </h1>
-			<ul id="primaryBills"></ul>
-			<ul id="cosponsorBills"></ul>
-		</div>
-		<div id="districtNo">
-			<h1>District Number: </h1><p></p>
-		</div>
-		<div id="districtOffice">
-			<h1>District Office: </h1>
-			<p></p>
-		</div>
-		<div id="party">
-			<h1>Party: </h1><p></p>
-		</div>
-		<div id="committees">
-			<h1>Committees:</h1>
-			<ul>
-			</ul>
-		</div>
-		<div id="higherEd">
-			<h1>Higher Education: </h1><p></p>
-		</div>
-	</div >-->
 </body>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -89,7 +61,7 @@
 		}
 	}
 
-	d3.json("enhanced.json", function(error, senate) {
+	d3.json("test.json", function(error, senate) {
 		if (error) return console.error(error);
 
 		geoJSON = topojson.feature(senate, senate.objects.senate);
@@ -111,21 +83,35 @@
 			}
 		}
 
-		d3.select("#republican-list")
+		var rl = d3.select("#republican-list")
 		.selectAll("div")
 		.data(republican)
 		.enter().append("div")
 		.attr("class", "list-item")
-		.html(function(d){ return d.district + " " + d.full_name})
 		.on("click", dropdown);
 
-		d3.select("#democrat-list")
+		rl.append("div")
+		.attr("class", "republican-district-num")
+		.html(function(d){ return d.district; });
+
+		rl.append("div")
+		.attr("class", "republican-representative-name")
+		.html(function(d){ return d.full_name; });
+
+		var dl = d3.select("#democrat-list")
 		.selectAll("div")
 		.data(democrat)
 		.enter().append("div")
 		.attr("class", "list-item")
-		.html(function(d){ return d.district + " " + d.full_name})
 		.on("click", dropdown);
+
+		dl.append("div")
+		.attr("class", "democrat-representative-name")
+		.html(function(d){ return d.full_name; });
+
+		dl.append("div")
+		.attr("class", "democrat-district-num")
+		.html(function(d){ return d.district; });
 
 		d3.select("#close")
 		.on("click", close);
@@ -171,6 +157,8 @@
 	});
 
 	function dropdown(d) {
+		 console.log(d);
+		
 		d3.select("#panel")
 		.transition()
 		.duration(750)
@@ -185,9 +173,30 @@
 		d3.select("#party")
 		.html(d.party);
 
-		console.log(d.offices[0]);
 		d3.select("#address")
 		.html(d.offices[0].address);
+
+		var a = d3.select("#primary")
+		.selectAll("div")
+		.data(d.higher_ed_bills.primary, function(d) { return d; });
+
+		a.enter().append("div")
+		.attr("class", "bill-item")
+		.append("h1")
+		.html(function(d){ return d; });
+	
+		a.exit().remove();
+
+		var b = d3.select("#cosponsor")
+		.selectAll("div")
+		.data(d.higher_ed_bills.cosponsor, function(d) { return d; });
+
+		b.enter().append("div")
+		.attr("class", "bill-item")
+		.append("h1")
+		.html(function(d){ return d; });
+	
+		b.exit().remove();
 	}
 
 	function close() {
