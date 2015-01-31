@@ -118,7 +118,7 @@ h4 {
 	width: 100%;
 	background-color: black;
 	position: absolute;
-	z-index: 3;
+	z-index: 4;
 }
 
 #map {
@@ -141,13 +141,13 @@ h4 {
     top: -1024px;
     left: 16%;
     z-index: 2;
-    background-color: #E1F5C4;
+    background-color: #FFFFFF;
     width: 68%;
 	height: calc(100% - 50px);
 }
 
 .bills{
-	background-color: #DBDB8D;
+	/*background-color: #DBDB8D;*/
 	width: 50%;
 	height: calc(100% - 270px);
 	float: left;
@@ -176,14 +176,23 @@ h4 {
 		0 18px 23px rgba(0, 0, 0, 0.1)
 }
 
-#close img{
+#bill-panel {
+	position: absolute;
+    top: -1024px;
+    left: 16%;
+    z-index: 3;
+    background-color: #FFFFFF;
+    width: 68%;
+	height: calc(100% - 50px);
+}
+
+.close img{
 	width: 40px;
 	height: 40px;
 	position: absolute;
 	top: 0;
 	right: 0;
 	margin: 10px;
-
 }
 
 #portrait {
@@ -225,6 +234,11 @@ h4 {
 
 .information #address{
 	margin: 3px 0;
+}
+
+.information #bill-id {
+	font-size: 2.8em;
+	margin: 15px 0;
 }
 
 

@@ -6,9 +6,7 @@
 </head>
 <body>
 	<div class="top"></div>
-	<div id="democrat-list" class="column">
-		
-	</div>
+	<div id="democrat-list" class="column"></div>
 	<div id="map"></div>
 	<div id="panel">
 		<img id="portrait"/>
@@ -17,9 +15,16 @@
 			<h2 id="party"></h2>
 			<h4 id="address"></h4>
 		</div>
-		<div class="bills" id="primary"></div>
-		<div class="bills" id="cosponsor"></div>
-		<div id="close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
+		<div class="bills" id="primary">Sponsored</div>
+		<div class="bills" id="cosponsor">Cosponsored</div>
+		<div class="close" id="close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
+	</div>
+	<div id="bill-panel">
+		<div class="information">
+			<h1 id="bill-id"></h1>
+			<h3 id="descripton"></h3>
+		</div>
+		<div class="close" id="bill-close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
 	</div>
 	<div id="republican-list" class="column"></div>
 </body>
@@ -61,7 +66,7 @@
 		}
 	}
 
-	d3.json("test.json", function(error, senate) {
+	d3.json("enhanced.json", function(error, senate) {
 		if (error) return console.error(error);
 
 		geoJSON = topojson.feature(senate, senate.objects.senate);
@@ -79,16 +84,17 @@
 					republican.push(senate.objects.senate.geometries[i].properties.legislator) :
 					democrat.push(senate.objects.senate.geometries[i].properties.legislator);
 			}catch(e){
-				console.log("undefined key");
+				// console.log("undefined key");
 			}
 		}
 
+		console.log(senate);
 		var rl = d3.select("#republican-list")
 		.selectAll("div")
 		.data(republican)
 		.enter().append("div")
 		.attr("class", "list-item")
-		.on("click", dropdown);
+		.on("click", dropRep);
 
 		rl.append("div")
 		.attr("class", "republican-district-num")
@@ -103,7 +109,7 @@
 		.data(democrat)
 		.enter().append("div")
 		.attr("class", "list-item")
-		.on("click", dropdown);
+		.on("click", dropRep);
 
 		dl.append("div")
 		.attr("class", "democrat-representative-name")
@@ -116,6 +122,8 @@
 		d3.select("#close")
 		.on("click", close);
 
+		d3.select("#bill-close")
+		.on("click", closeBill);
 
 		// var b = path.bounds(geoJSON),
 		// s = .95 / Math.max((b[1][0] - b[0][0]) / width,
@@ -156,13 +164,8 @@
 
 	});
 
-	function dropdown(d) {
-		 console.log(d);
-		
-		d3.select("#panel")
-		.transition()
-		.duration(750)
-		.style("top", "50px");
+	function dropRep(d) {
+		// console.log(d);
 
 		d3.select("#portrait")
 		.attr("src", d.photo_url);
@@ -182,8 +185,15 @@
 
 		a.enter().append("div")
 		.attr("class", "bill-item")
-		.append("h1")
-		.html(function(d){ return d; });
+		.append("h2")
+		.attr("id", function(d){ return d; })
+		.html(function(d){
+			d3.json('bills/' + d + '.json', function(error, json) {
+	  			if (error) return console.warn(error);
+	  			d3.select("#"+d).html(json.bill_id);
+			});
+		})
+		.on("click", dropBill);
 	
 		a.exit().remove();
 
@@ -193,14 +203,55 @@
 
 		b.enter().append("div")
 		.attr("class", "bill-item")
-		.append("h1")
-		.html(function(d){ return d; });
+		.append("h2")
+		.attr("id", function(d){ return d; })
+		.html(function(d){
+			d3.json('bills/' + d + '.json', function(error, json) {
+	  			if (error) return console.warn(error);
+	  			console.log(d);
+	  			d3.select("#"+d).html(json.bill_id);
+			});
+		})
+		.on("click", dropBill);
 	
 		b.exit().remove();
+
+		d3.select("#panel")
+		.transition()
+		.duration(750)
+		.style("top", "50px");
+	}
+
+	function dropBill(d){
+		d3.select("#bill")
+		.html(d);
+
+		d3.json('bills/' + d + '.json', function(error, json) {
+  			if (error) return console.warn(error);
+
+  			d3.select("#bill-id")
+  			.html(json.bill_id);
+
+  			d3.select("#descripton")
+  			.html(json.title);
+
+		});
+
+		d3.select("#bill-panel")
+		.transition()
+		.duration(750)
+		.style("top", "50px");
 	}
 
 	function close() {
 		d3.select("#panel")
+		.transition()
+		.duration(750)
+		.style("top", "-1024px");
+	}
+
+	function closeBill() {
+		d3.select("#bill-panel")
 		.transition()
 		.duration(750)
 		.style("top", "-1024px");
