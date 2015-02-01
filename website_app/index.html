@@ -165,6 +165,7 @@
 
 	function dropRep(d) {
 		console.log(d);
+		closeBill();
 
 		d3.select("#portrait")
 		.attr("src", d.photo_url);
@@ -227,6 +228,8 @@
 
 		d3.json('bills/' + d + '.json', function(error, json) {
   			if (error) return console.warn(error);
+
+  			console.log(json);
 
   			d3.select("#bill-id")
   			.html(json.bill_id);
