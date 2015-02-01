@@ -52,6 +52,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
 
     for legislator in legislators:
         legislator_id_set[legislator['leg_id']] = legislator
+        legislator['higher_ed_bills'] = {'primary':[], 'cosponsor':[]}
 
 
     bill_fields = "id,sponsors,scraped_subjects"
@@ -87,11 +88,4 @@ def addSponsorsToSet(legislator_id_set, bill):
         if sponsor['leg_id'] in legislator_id_set:
             sponsor_type = sponsor['type']
             legislator = legislator_id_set[sponsor['leg_id']]
-            if not 'higher_ed_bills' in legislator:
-                legislator['higher_ed_bills'] = {}
-                legislator['higher_ed_bills'][sponsor_type] = [bill['id']]
-            else:
-                if not sponsor_type in legislator['higher_ed_bills']:
-                    legislator['higher_ed_bills'][sponsor_type] = [bill['id']]
-                else:
-                    legislator['higher_ed_bills'][sponsor_type].append(bill['id'])
+            legislator['higher_ed_bills'][sponsor_type].append(bill['id'])
