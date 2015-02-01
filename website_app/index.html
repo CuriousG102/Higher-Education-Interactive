@@ -23,10 +23,28 @@
 		<div class="information">
 			<h1 id="bill-id"></h1>
 			<h3 id="descripton"></h3>
-			<h4 class="actionDate passed" id="first">Introduced</h4>
-			<h4 class="actionDate" id="lower"></h4>
-			<h4 class="actionDate" id="upper"></h4>
-			<h4 class="actionDate" id="signed"></h4>
+			<div class="timeline">
+				<div class="dateContainer" id="firstContainer">
+					<h4 class="actionDate" id="first">Introduced</h4>
+					<h4 class="date" id="firstDate"></h4>
+				</div>
+				<div class="dateContainer" id="lowerContainer">
+					<h4 class="actionDate" id="lower">Passed the House</h4>
+					<h4 class="date" id="lowerDate"></h4>
+				</div>
+				<div class="dateContainer" id="upperContainer">
+					<h4 class="actionDate" id="upper">Passed the Senate</h4>
+					<h4 class="date" id="upperDate"></h4>
+				</div>
+				<div class="dateContainer" id="signedContainer">
+					<h4 class="actionDate" id="signed">Signed by the Governor</h4>
+					<h4 class="date" id="signedDate"></h4>
+				</div>
+			</div>
+			<div id="billTexts">
+				<h3>Bill Versions</h3>
+				<ul></ul>
+			</div>
 		</div>
 		<div class="close" id="bill-close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
 	</div>
@@ -226,6 +244,14 @@
 		.style("top", "50px");
 	}
 
+	function formatDate(dateString) {
+		if (dateString) {
+			var formatter = d3.time.format("%B %e, %Y");
+			var parser = d3.time.format("%Y-%m-%d %X");
+			return formatter(parser.parse(dateString));
+		} else return "";
+	}
+
 	function dropBill(d){
 		d3.select("#bill")
 		.html(d);
@@ -240,6 +266,31 @@
 
   			d3.select("#descripton")
   			.html(json.title);
+
+  			// Set up our timeline for different styling based on passage (or lack thereof)
+  			// bills and adds the date of passage as a detail for each step
+  			d3.select("#firstContainer").classed("passed", json.action_dates.first);
+  			d3.select("#firstDate").html(formatDate(json.action_dates.first));
+  			d3.select("#lowerContainer").classed("passed", json.action_dates.passed_lower);
+  			d3.select("#lowerDate").html(formatDate(json.action_dates.passed_lower));
+  			d3.select("#upperContainer").classed("passed", json.action_dates.passed_upper);
+  			d3.select("#upperDate").html(formatDate(json.action_dates.passed_upper));
+  			d3.select("#signedContainer").classed("passed", json.action_dates.signed);
+  			d3.select("#signedDate").html(formatDate(json.action_dates.signed));
+
+  			// add links to all the version of the bill
+  			var billTexts = d3.select("#billTexts")
+  							  .select("ul")
+  							  .selectAll("li")
+  			                  .data(json.versions);
+  			billTexts.enter()
+  			.append("li")
+  			.append("a")
+  			.attr("href", function(d) { return d.url; })
+  			.attr("class", "billTextLink")
+  			.html(function(d) { return d.name; });
+
+  			billTexts.exit().remove();
 
 		});
 
@@ -302,11 +353,11 @@
 		.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
 
 		console.log(d.properties.legislator);
-		var legislator = d.properties.legislator;
+		/*var legislator = d.properties.legislator;
 		var infoPanel = d3.select(".InfoPanel");
 		infoPanel.select("#senatorName")
 		.select("p")
-		.text(legislator.full_name);
+		.text(legislator.full_name);*/
 
 		/*infoPanel.select("#districtNo")
 		.select("p")

@@ -196,6 +196,43 @@ h4 {
 	height: calc(100% - 50px);
 }
 
+.dateContainer {
+	float: left;
+	clear: left;
+}
+
+.dateContainer {
+  	width: 370px;
+	height: 30px;
+}
+
+.actionDate {
+	float: left;
+	clear: left;
+	text-align: left;
+	vertical-align: center;
+	width: 200px;
+	height: 30px;
+	margin: 4px;
+	background: blue;
+	font-size: 1em;
+	color: gray;
+}
+
+.passed .actionDate{
+	color: black;
+}
+
+.date {
+	color: gray;
+	float: left;
+}
+
+#billTexts, .billTextLink {
+	float: left;
+	clear: left;
+}
+
 .close img{
 	width: 40px;
 	height: 40px;
