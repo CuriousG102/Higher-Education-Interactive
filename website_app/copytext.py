@@ -170,6 +170,12 @@ class Sheet(object):
 
         return obj 
 
+    def dict(self):
+        """
+        Returns a python OrderedDict of the sheet for use in editing JSON files
+        """
+        return self._serialize()
+
     def json(self):
         """
         Serialize the sheet as JSON.
