@@ -1,148 +1,287 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-
-.background {
-	fill: none;
-	pointer-events: all;
-}
-
-.district {
-	fill: #ccc;
-	cursor: pointer;
-}
-.district.active {
-	fill: purple;
-}
-
-.district:hover {
-	fill: orange;
-}
-.mesh {
-	fill: none;
-	stroke: #fff;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-}
-.district_no {
-	fill: white;
-	pointer-events: none;
-}
-.Republican {
-	fill: red;
-}
-.Democratic {
-	fill: blue;
-}
-
-</style>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="global.css"/>
+</head>
 <body>
+	<div class="top"></div>
+	<div id="democrat-list" class="column"></div>
+	<div id="map"></div>
+	<div id="panel">
+		<img id="portrait"/>
+		<div class="information">
+			<h1 id="name"></h1>
+			<h2 id="party"></h2>
+			<h4 id="address"></h4>
+		</div>
+		<div class="bills" id="primary">Sponsored</div>
+		<div class="bills" id="cosponsor">Cosponsored</div>
+		<div class="close" id="close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
+	</div>
+	<div id="bill-panel">
+		<div class="information">
+			<h1 id="bill-id"></h1>
+			<h3 id="descripton"></h3>
+		</div>
+		<div class="close" id="bill-close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
+	</div>
+	<div id="republican-list" class="column"></div>
+</body>
+
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script>
 
-var width = 600,
-    height = 600,
-    active = d3.select(null);
+	var width = 700,
+	height = 600,
+	active = d3.select(null);
 
-var projection = d3.geo.mercator()
-    .scale(1)
-    .translate([0, 0]);
+	var projection = d3.geo.mercator()
+	.scale(1)
+	.translate([0, 0]);
 
-var path = d3.geo.path()
+	var path = d3.geo.path()
 	.projection(projection);
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+	var svg = d3.select("#map").append("svg")
+	.attr("width", width)
+	.attr("height", height);
 
-svg.append("rect")
-    .attr("class", "background")
-    .attr("width", width)
-    .attr("height", height)
-    .on("click", reset);
+	svg.append("rect")
+	.attr("class", "background")
+	.attr("width", width)
+	.attr("height", height)
+	.on("click", reset);
 
-var g = svg.append("g")
-    .style("stroke-width", "1.5px");
+	var g = svg.append("g")
+	.style("stroke-width", "1.5px");
 
-function font_size_selection(d) {
-	var largest_font_size = 14;
-	var area = path.area(d);
-	if (area > 2800) {return largest_font_size + "pt";}
-	else {
-		return Math.ceil((area/2800) * largest_font_size) + "pt";
+	function font_size_selection(d) {
+		var largest_font_size = 14;
+		var area = path.area(d);
+		if (area > 2800) {return largest_font_size + "pt";}
+		else {
+			return Math.ceil((area/2800) * largest_font_size) + "pt";
+		}
 	}
-}
 
-d3.json("enhancedSenate.json", function(error, senate) {
-	if (error) return console.error(error);
-	console.log(senate);
-	geoJSON = topojson.feature(senate, senate.objects.senate);
-	console.log(geoJSON);
+	d3.json("enhancedSenate.json", function(error, senate) {
+		if (error) return console.error(error);
+		geoJSON = topojson.feature(senate, senate.objects.senate);
 
-	var b = path.bounds(geoJSON),
+		// console.log(senate.objects.senate.geometries);
+		// console.log(geoJSON);
+
+		var republican = [];
+		var democrat = [];
+
+		var arrayLength = senate.objects.senate.geometries.length;
+		for (var i = 0; i < arrayLength; i++) {
+			try{
+				senate.objects.senate.geometries[i].properties.legislator.party == "Republican" ?
+					republican.push(senate.objects.senate.geometries[i].properties.legislator) :
+					democrat.push(senate.objects.senate.geometries[i].properties.legislator);
+			}catch(e){
+				// console.log("undefined key");
+			}
+		}
+
+		console.log(senate);
+		var rl = d3.select("#republican-list")
+		.selectAll("div")
+		.data(republican)
+		.enter().append("div")
+		.attr("class", "list-item")
+		.on("click", dropRep);
+
+		rl.append("div")
+		.attr("class", "republican-district-num")
+		.html(function(d){ return d.district; });
+
+		rl.append("div")
+		.attr("class", "republican-representative-name")
+		.html(function(d){ return d.full_name; });
+
+		var dl = d3.select("#democrat-list")
+		.selectAll("div")
+		.data(democrat)
+		.enter().append("div")
+		.attr("class", "list-item")
+		.on("click", dropRep);
+
+		dl.append("div")
+		.attr("class", "democrat-representative-name")
+		.html(function(d){ return d.full_name; });
+
+		dl.append("div")
+		.attr("class", "democrat-district-num")
+		.html(function(d){ return d.district; });
+
+		d3.select("#close")
+		.on("click", close);
+
+		d3.select("#bill-close")
+		.on("click", closeBill);
+
+		var b = path.bounds(geoJSON),
 		s = .95 / Math.max((b[1][0] - b[0][0]) / width,
-						   (b[1][1] - b[0][1]) / height),
+			(b[1][1] - b[0][1]) / height),
 		t = [(width - s * (b[1][0] + b[0][0])) / 2,
-		     (height - s * (b[1][1] + b[0][1])) / 2]
+		(height - s * (b[1][1] + b[0][1])) / 2]
 
-	projection
+		projection
 		.scale(s)
 		.translate(t);
 
-	g.selectAll("path")
+		g.selectAll("path")
 		.data(geoJSON.features)
-	  .enter().append("path")
-	   	.attr("d", path)
-	   	.attr("class", function(d) {
-	   		if (d.properties.legislator === undefined) return "district";
-	   		return "district " + d.properties.legislator.party;
-	   	})
-	   	.on("click", clicked);
+		.enter().append("path")
+		.attr("d", path)
+		.attr("class", function(d) {
+			if (d.properties.legislator === undefined) return "district";
+			return "district " + d.properties.legislator.party;
+		})
+		.on("click", clicked);
 
-	g.selectAll("text")
+		g.selectAll("text")
 		.data(geoJSON.features)
-	  .enter().append("text")
-	  	.text(function(d) { return d.id ;})
-	  	.attr("x", function(d) { return path.centroid(d)[0]; })
-	  	.attr("y", function(d) { return path.centroid(d)[1]; })
-	  	.attr("text-anchor", "middle")
-	  	.attr("font-size", font_size_selection)
-	  	.attr("class", "district_no");
+		.enter().append("text")
+		.text(function(d) { return d.id ;})
+		.attr("x", function(d) { return path.centroid(d)[0]; })
+		.attr("y", function(d) { return path.centroid(d)[1]; })
+		.attr("text-anchor", "middle")
+		.attr("font-size", font_size_selection)
+		.attr("class", "district_no");
 
-	g.append("path")
+		g.append("path")
 		.datum(topojson.mesh(senate, 
-							 senate.objects.senate, 
-							 function(a, b) { return a !== b; }))
+			senate.objects.senate, 
+			function(a, b) { return a !== b; }))
 		.attr("class", "mesh")
 		.attr("d", path);
 
+	});
 
-});
+	function dropRep(d) {
+		console.log(d);
 
-function appendPrimary(error, primaryBill) {
-	appendBill(primaryBill, '#primaryBills');
-}
+		d3.select("#portrait")
+		.attr("src", d.photo_url);
 
-function appendCosponsor(error, cosponsorBill) {
-	appendBill(cosponsorBill, '#cosponsorBills');
-}
+		d3.select("#name")
+		.html(d.full_name);
 
-function appendBill(bill, idSelector) {
-	d3.select(idSelector)
-	  .append("li")
-	  .attr("class", "bill")
-	  .text(bill.title);
-}
+		d3.select("#party")
+		.html(d.party);
 
-function clicked(d) {
-	d3.select(".bill").remove();
-	if (active.node() === this) return reset();
-	active.classed("active", false);
-	active = d3.select(this).classed("active", true);
-	percent_svg_to_fill = .4;
+		d3.select("#address")
+		.html(d.offices[0].address);
 
-	var bounds = path.bounds(d),
+		var a = d3.select("#primary")
+		.selectAll("div")
+		.data(d.higher_ed_bills.primary, function(d) { return d; });
+
+		a.enter().append("div")
+		.attr("class", "bill-item")
+		.append("h2")
+		.attr("id", function(d){ return d; })
+		.html(function(d){
+			d3.json('bills/' + d + '.json', function(error, json) {
+	  			if (error) return console.warn(error);
+	  			d3.select("#"+d).html(json.bill_id);
+			});
+		})
+		.on("click", dropBill);
+	
+		a.exit().remove();
+
+		var b = d3.select("#cosponsor")
+		.selectAll("div")
+		.data(d.higher_ed_bills.cosponsor, function(d) { return d; });
+
+		b.enter().append("div")
+		.attr("class", "bill-item")
+		.append("h2")
+		.attr("id", function(d){ return d; })
+		.html(function(d){
+			d3.json('bills/' + d + '.json', function(error, json) {
+	  			if (error) return console.warn(error);
+	  			console.log(d);
+	  			d3.select("#"+d).html(json.bill_id);
+			});
+		})
+		.on("click", dropBill);
+	
+		b.exit().remove();
+
+		d3.select("#panel")
+		.transition()
+		.duration(750)
+		.style("top", "50px");
+	}
+
+	function dropBill(d){
+		d3.select("#bill")
+		.html(d);
+
+		d3.json('bills/' + d + '.json', function(error, json) {
+  			if (error) return console.warn(error);
+
+  			d3.select("#bill-id")
+  			.html(json.bill_id);
+
+  			d3.select("#descripton")
+  			.html(json.title);
+
+		});
+
+		d3.select("#bill-panel")
+		.transition()
+		.duration(750)
+		.style("top", "50px");
+	}
+
+	function close() {
+		d3.select("#panel")
+		.transition()
+		.duration(750)
+		.style("top", "-1024px");
+	}
+
+	function closeBill() {
+		d3.select("#bill-panel")
+		.transition()
+		.duration(750)
+		.style("top", "-1024px");
+	}
+
+	function appendPrimary(error, primaryBill) {
+		appendBill(primaryBill, '#primaryBills');
+	}
+
+	function appendCosponsor(error, cosponsorBill) {
+		appendBill(cosponsorBill, '#cosponsorBills');
+	}
+
+	function appendBill(bill, idSelector) {
+		d3.select(idSelector)
+		.append("li")
+		.attr("class", "bill")
+		.text(bill.title);
+	}
+
+	function clicked(d) {
+		d3.select(".bill").remove();
+		if (active.node() === this) {
+			dropRep(d.properties.legislator);
+			reset();
+		}
+		active.classed("active", false);
+		active = d3.select(this).classed("active", true);
+		percent_svg_to_fill = .4;
+
+		var bounds = path.bounds(d),
 		dx = bounds[1][0] - bounds[0][0],
 		dy = bounds[1][1] - bounds[0][1],
 		x = (bounds[0][0] + bounds[1][0]) / 2,
@@ -150,97 +289,52 @@ function clicked(d) {
 		scale = percent_svg_to_fill / Math.max(dx / width, dy / height),
 		translate = [width / 2 - scale * x, height / 2 - scale * y];
 
-	g.transition()
+		g.transition()
 		.duration(750)
 		.style("stroke-width", 1.5 / scale + "px")
 		.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
 
-	console.log(d.properties.legislator);
-	var legislator = d.properties.legislator;
-	var infoPanel = d3.select(".InfoPanel");
-	infoPanel.select("#senatorName")
-	         .select("p")
-	         .text(legislator.full_name);
+		console.log(d.properties.legislator);
+		var legislator = d.properties.legislator;
+		var infoPanel = d3.select(".InfoPanel");
+		infoPanel.select("#senatorName")
+		.select("p")
+		.text(legislator.full_name);
 
-	// need to make this if statement better by deferring action of 
-	// adding bills to elements until all bills have loaded.
-	// This will enable things like sorting bills by title
-	// We will use https://github.com/mbostock/queue
-	if (d.properties.legislator.higher_ed_bills) {
-		var primaryBills;
-		var cosponsorBills;
-		var higher_ed_bills = d.properties.legislator.higher_ed_bills;
-		if (higher_ed_bills.primary) {
-			primaryBills=higher_ed_bills.primary;
-		} else { primaryBills = [];}
-		if (higher_ed_bills.cosponsor) {
-			cosponsorBills=higher_ed_bills.cosponsor;
-		} else { cosponsorBills = [];}
-
-		for (var i = 0; i < primaryBills.length; i++) {
-			d3.json('bills/' + primaryBills[i] + '.json', appendPrimary);
-		}
-		for (var i = 0; i < cosponsorBills.length; i++) {
-			d3.json('bills/' + cosponsorBills[i] + '.json', appendCosponsor);
-		}
+		/*infoPanel.select("#districtNo")
+		.select("p")
+		.text(legislator.district);
+		infoPanel.select("#districtOffice")
+		.select("p")
+		.text(legislator.offices[1].address);
+		infoPanel.select("#party")
+		.select("p")
+		.text(legislator.party);
+		var committees = infoPanel.select("#committees")
+		.select("ul")
+		.selectAll("li")
+		.data(legislator.roles.slice(1, legislator.roles.length));
+		committees.enter()
+		.append("li")
+		.text(function(d) { return d.committee; });
+		committees.exit().remove();*/
 	}
 
-	infoPanel.select("#districtNo")
-			 .select("p")
-			 .text(legislator.district);
-	infoPanel.select("#districtOffice")
-			 .select("p")
-			 .text(legislator.offices[1].address);
-	infoPanel.select("#party")
-			 .select("p")
-			 .text(legislator.party);
-	var committees = infoPanel.select("#committees")
-			                 .select("ul")
-			                 .selectAll("li")
-			 				 .data(legislator.roles.slice(1, legislator.roles.length));
-	committees.enter()
-			  .append("li")
-              .text(function(d) { return d.committee; });
-    committees.exit().remove();
-}
+	function reset() {
+		active.classed("active", false);
+		active = d3.select(null);
 
-function reset() {
-  active.classed("active", false);
-  active = d3.select(null);
-
-  g.transition()
-      .duration(750)
-      .style("stroke-width", "1.5px")
-      .attr("transform", "");
-}
+		g.transition()
+		.duration(750)
+		.style("stroke-width", "1.5px")
+		.attr("transform", "");
+	}
 
 </script>
-<div class="InfoPanel">
-	<div id="senatorName">
-		<h1>Senator Name: </h1><p></p>
-	</div>
-	<div id="bills">
-		<h1>Bills from the 84th Session: </h1>
-		<ul id="primaryBills"></ul>
-		<ul id="cosponsorBills"></ul>
-	</div>
-	<div id="districtNo">
-		<h1>District Number: </h1><p></p>
-	</div>
-	<div id="districtOffice">
-		<h1>District Office: </h1>
-		<p></p>
-	</div>
-	<div id="party">
-		<h1>Party: </h1><p></p>
-	</div>
-	<div id="committees">
-		<h1>Committees:</h1>
-		<ul>
-		</ul>
-	</div>
-	<div id="higherEd">
-		<h1>Higher Education: </h1><p></p>
-	</div>
-</div>
-</body>
+
+
+
+
+
+
+
