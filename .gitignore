@@ -1,4 +1,9 @@
-settings.py
 *.DS_STORE
 .sunlight.key
 *.pyc
+
+#ignore our data
+/bills
+enhancedSenate.json
+enhancedHouse.json
+
