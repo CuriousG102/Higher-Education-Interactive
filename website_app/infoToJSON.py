@@ -66,8 +66,9 @@ def addToObjects(objects, filePath, sheetName): # this is an semi-abstract funct
                 _object[key] = dict[entry][key].unescape() # add that key to our legislator with its associated value
                 keySet.add(key)
     for _object in objects:
-        if not key in _object:
-            _object[key] = '' # for each key that we've added to one of our legislators, if another legislator doesn't have it add the key and just give it an empty string
+        for key in keySet:
+            if not key in _object:
+                _object[key] = '' # for each key that we've added to one of our legislators, if another legislator doesn't have it add the key and just give it an empty string
 
 
 
