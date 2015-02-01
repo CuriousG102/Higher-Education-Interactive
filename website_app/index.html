@@ -74,7 +74,7 @@ function font_size_selection(d) {
 	}
 }
 
-d3.json("enhanced.json", function(error, senate) {
+d3.json("enhancedSenate.json", function(error, senate) {
 	if (error) return console.error(error);
 	console.log(senate);
 	geoJSON = topojson.feature(senate, senate.objects.senate);

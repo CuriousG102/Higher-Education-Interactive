@@ -62,7 +62,7 @@ def addToObjects(objects, filePath, sheetName): # this is an semi-abstract funct
         if entry in object_id_set: # if that i.d. is in our legislator_id_set
             _object = object_id_set[entry] # get the legislator
             for key in dict[entry]: # for every key value we have to add for the legislator, e.g. 'Higher Education'
-                _object[key] = dict[entry][key] # add that key to our legislator with its associated value
+                _object[key] = dict[entry][key].unescape() # add that key to our legislator with its associated value
 
 
 
@@ -102,7 +102,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
         if int(district['id']) in legislator_district_set:
             district['properties'] = {}
             district['properties']['legislator'] = legislator_district_set[int(district['id'])]
-    
+
     addToLegislators(legislators)
 
     return json.dumps(obj=geoJSON, ensure_ascii=False, separators=(',',':'))
