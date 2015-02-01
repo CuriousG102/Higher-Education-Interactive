@@ -3,7 +3,7 @@
 *.pyc
 
 #ignore our data
-/bills
+bills/
 enhancedSenate.json
 enhancedHouse.json
 
