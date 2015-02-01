@@ -33,7 +33,7 @@
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script>
 
-	var width = 600,
+	var width = 700,
 	height = 600,
 	active = d3.select(null);
 
@@ -125,47 +125,47 @@
 		d3.select("#bill-close")
 		.on("click", closeBill);
 
-		// var b = path.bounds(geoJSON),
-		// s = .95 / Math.max((b[1][0] - b[0][0]) / width,
-		// 	(b[1][1] - b[0][1]) / height),
-		// t = [(width - s * (b[1][0] + b[0][0])) / 2,
-		// (height - s * (b[1][1] + b[0][1])) / 2]
+		var b = path.bounds(geoJSON),
+		s = .95 / Math.max((b[1][0] - b[0][0]) / width,
+			(b[1][1] - b[0][1]) / height),
+		t = [(width - s * (b[1][0] + b[0][0])) / 2,
+		(height - s * (b[1][1] + b[0][1])) / 2]
 
-		// projection
-		// .scale(s)
-		// .translate(t);
+		projection
+		.scale(s)
+		.translate(t);
 
-		// g.selectAll("path")
-		// .data(geoJSON.features)
-		// .enter().append("path")
-		// .attr("d", path)
-		// .attr("class", function(d) {
-		// 	if (d.properties.legislator === undefined) return "district";
-		// 	return "district " + d.properties.legislator.party;
-		// })
-		// .on("click", clicked);
+		g.selectAll("path")
+		.data(geoJSON.features)
+		.enter().append("path")
+		.attr("d", path)
+		.attr("class", function(d) {
+			if (d.properties.legislator === undefined) return "district";
+			return "district " + d.properties.legislator.party;
+		})
+		.on("click", clicked);
 
-		// g.selectAll("text")
-		// .data(geoJSON.features)
-		// .enter().append("text")
-		// .text(function(d) { return d.id ;})
-		// .attr("x", function(d) { return path.centroid(d)[0]; })
-		// .attr("y", function(d) { return path.centroid(d)[1]; })
-		// .attr("text-anchor", "middle")
-		// .attr("font-size", font_size_selection)
-		// .attr("class", "district_no");
+		g.selectAll("text")
+		.data(geoJSON.features)
+		.enter().append("text")
+		.text(function(d) { return d.id ;})
+		.attr("x", function(d) { return path.centroid(d)[0]; })
+		.attr("y", function(d) { return path.centroid(d)[1]; })
+		.attr("text-anchor", "middle")
+		.attr("font-size", font_size_selection)
+		.attr("class", "district_no");
 
-		// g.append("path")
-		// .datum(topojson.mesh(senate, 
-		// 	senate.objects.senate, 
-		// 	function(a, b) { return a !== b; }))
-		// .attr("class", "mesh")
-		// .attr("d", path);
+		g.append("path")
+		.datum(topojson.mesh(senate, 
+			senate.objects.senate, 
+			function(a, b) { return a !== b; }))
+		.attr("class", "mesh")
+		.attr("d", path);
 
 	});
 
 	function dropRep(d) {
-		// console.log(d);
+		console.log(d);
 
 		d3.select("#portrait")
 		.attr("src", d.photo_url);
@@ -274,7 +274,10 @@
 
 	function clicked(d) {
 		d3.select(".bill").remove();
-		if (active.node() === this) return reset();
+		if (active.node() === this) {
+			dropRep(d.properties.legislator);
+			reset();
+		}
 		active.classed("active", false);
 		active = d3.select(this).classed("active", true);
 		percent_svg_to_fill = .4;
@@ -299,30 +302,7 @@
 		.select("p")
 		.text(legislator.full_name);
 
-		// need to make this if statement better by deferring action of 
-		// adding bills to elements until all bills have loaded.
-		// This will enable things like sorting bills by title
-		// We will use https://github.com/mbostock/queue
-		if (d.properties.legislator.higher_ed_bills) {
-			var primaryBills;
-			var cosponsorBills;
-			var higher_ed_bills = d.properties.legislator.higher_ed_bills;
-			if (higher_ed_bills.primary) {
-				primaryBills=higher_ed_bills.primary;
-			} else { primaryBills = [];}
-			if (higher_ed_bills.cosponsor) {
-				cosponsorBills=higher_ed_bills.cosponsor;
-			} else { cosponsorBills = [];}
-
-			for (var i = 0; i < primaryBills.length; i++) {
-				d3.json('bills/' + primaryBills[i] + '.json', appendPrimary);
-			}
-			for (var i = 0; i < cosponsorBills.length; i++) {
-				d3.json('bills/' + cosponsorBills[i] + '.json', appendCosponsor);
-			}
-		}
-
-		infoPanel.select("#districtNo")
+		/*infoPanel.select("#districtNo")
 		.select("p")
 		.text(legislator.district);
 		infoPanel.select("#districtOffice")
@@ -338,7 +318,7 @@
 		committees.enter()
 		.append("li")
 		.text(function(d) { return d.committee; });
-		committees.exit().remove();
+		committees.exit().remove();*/
 	}
 
 	function reset() {
