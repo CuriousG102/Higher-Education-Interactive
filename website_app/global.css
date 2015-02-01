@@ -1,0 +1,242 @@
+/*******************************************************************************
+MeyerWeb Reset
+*******************************************************************************/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*******************************************************************************
+Clearfixes
+*******************************************************************************/
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*******************************************************************************
+Map Styling
+*******************************************************************************/
+
+.background {
+	fill: none;
+	pointer-events: all;
+}
+
+.district {
+	fill: #ccc;
+	cursor: pointer;
+}
+.district.active {
+	fill: purple;
+}
+
+.district:hover {
+	fill: orange;
+}
+.mesh {
+	fill: none;
+	stroke: #fff;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+.district_no {
+	fill: white;
+	pointer-events: none;
+}
+.Republican {
+	fill: red;
+}
+.Democratic {
+	fill: blue;
+}
+
+/*******************************************************************************
+Global Styling
+*******************************************************************************/
+
+html, body {
+	height: 100%;
+	font-family: "Helvetica Neue", Helvetica, Sans-serif;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.17em;
+}
+
+h4 {
+	font-size: 0.76em;
+}
+
+.top {
+	height: 50px;
+	width: 100%;
+	background-color: black;
+	position: absolute;
+	z-index: 4;
+}
+
+#map {
+	width: 68%;
+	height: calc(100% - 50px);
+	margin: 50px 0 0 0;
+	/*background-color: #FF4E50;*/
+	float: left;
+	position: relative;
+    z-index: 1;
+}
+
+#map svg {
+	width: 100%;
+	height: calc(100% - 50px);
+}
+
+#panel {
+	position: absolute;
+    top: -1024px;
+    left: 16%;
+    z-index: 2;
+    background-color: #FFFFFF;
+    width: 68%;
+	height: calc(100% - 50px);
+}
+
+.bills{
+	/*background-color: #DBDB8D;*/
+	width: 50%;
+	height: calc(100% - 270px);
+	float: left;
+	text-align: center;
+	overflow: scroll;
+}
+
+.column {
+	width: 16%;
+	height: calc(100% - 50px);
+	margin: 50px 0 0 0;
+	/*background-color: #FC913A;*/
+	float: left;
+	overflow: scroll;
+}
+
+.list-item {
+	max-width: 100%;
+	height: 20px;
+	padding: 8px;
+	/*background-color: #EDE574;*/
+	border-bottom: 1px solid #C7C7CC;
+	/*text-align: center;*/
+	text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.4),
+		0 8px 13px rgba(0, 0, 0, 0.1),
+		0 18px 23px rgba(0, 0, 0, 0.1)
+}
+
+#bill-panel {
+	position: absolute;
+    top: -1024px;
+    left: 16%;
+    z-index: 3;
+    background-color: #FFFFFF;
+    width: 68%;
+	height: calc(100% - 50px);
+}
+
+.close img{
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 10px;
+}
+
+#portrait {
+	width: 150px;
+	height: 150px;
+	border-radius: 75px;
+	margin: 10px auto;
+	display: block;
+}
+
+.information {
+	height: 100px;
+	text-align: center;
+}
+
+.republican-district-num {
+	float: left;
+	text-align: left;
+}
+
+.republican-representative-name {
+	float: right;
+	text-align: right;
+}
+
+.democrat-district-num {
+	float: right;
+	text-align: right;
+}
+
+.democrat-representative-name {
+	float: left;
+	text-align: left;
+}
+
+.information #party {
+	margin: 4px 0;
+}
+
+.information #address{
+	margin: 3px 0;
+}
+
+.information #bill-id {
+	font-size: 2.8em;
+	margin: 15px 0;
+}

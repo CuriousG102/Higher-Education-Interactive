@@ -4,6 +4,7 @@ import io
 
 from sunlight import openstates
 import sunlight
+import copytext
 
 import settings
 
@@ -27,6 +28,8 @@ def produceBillJSONFiles(files_destination):
         bills.extend(billsToAdd)
         pageNo += 1
 
+    addToBills(bills)
+
     if not os.path.exists(files_destination):
         os.makedirs(files_destination)
 
@@ -40,6 +43,33 @@ def produceBillJSONFiles(files_destination):
                                           separators=(',',':'))
                     f.write(jsonDump)
                 break
+
+
+def addToBills(bills):
+    addToObjects(bills, settings.file_path, 'Bills')
+
+def addToLegislators(legislators):
+    addToObjects(legislators, settings.file_path, 'Legislators')
+
+def addToObjects(objects, filePath, sheetName): # this is an semi-abstract function so I am explaining it with comments
+    object_id_set = {} # e.g. a set of legislators with their keys being their openstate ids
+    for _object in objects:
+        object_id_set[_object['id']] = _object
+    copy = copytext.Copy(filePath) # get our copysheet and instantiate a copytext Copy of it
+    sheet = copy[sheetName] # get the correct sheetName e.g. 'Legislators'
+    dict = sheet.dict() 
+    keySet = set() # make a keyset so that we can add each key to all our legislators so D3 isn't angry
+    for entry in dict: # e.g. for each legislator i.d. in 'Legislators'
+        if entry in object_id_set: # if that i.d. is in our legislator_id_set
+            _object = object_id_set[entry] # get the legislator
+            for key in dict[entry]: # for every key value we have to add for the legislator, e.g. 'Higher Education'
+                _object[key] = dict[entry][key].unescape() # add that key to our legislator with its associated value
+                keySet.add(key)
+    for _object in objects:
+        if not key in _object:
+            _object[key] = '' # for each key that we've added to one of our legislators, if another legislator doesn't have it add the key and just give it an empty string
+
+
 
 
 
@@ -64,6 +94,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
 
     for legislator in legislators:
         legislator_id_set[legislator['leg_id']] = legislator
+        legislator['higher_ed_bills'] = {'primary':[], 'cosponsor':[]}
 
 
     bill_fields = "id,sponsors,scraped_subjects"
@@ -101,6 +132,8 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
             district['properties'] = {}
             district['properties']['legislator'] = legislator_district_set[int(district['id'])]
 
+    addToLegislators(legislators)
+
     return json.dumps(obj=geoJSON, ensure_ascii=False, separators=(',',':'))
 
 
@@ -109,11 +142,4 @@ def addSponsorsToSet(legislator_id_set, bill):
         if sponsor['leg_id'] in legislator_id_set:
             sponsor_type = sponsor['type']
             legislator = legislator_id_set[sponsor['leg_id']]
-            if not 'higher_ed_bills' in legislator:
-                legislator['higher_ed_bills'] = {}
-                legislator['higher_ed_bills'][sponsor_type] = [bill['id']]
-            else:
-                if not sponsor_type in legislator['higher_ed_bills']:
-                    legislator['higher_ed_bills'][sponsor_type] = [bill['id']]
-                else:
-                    legislator['higher_ed_bills'][sponsor_type].append(bill['id'])
+            legislator['higher_ed_bills'][sponsor_type].append(bill['id'])
