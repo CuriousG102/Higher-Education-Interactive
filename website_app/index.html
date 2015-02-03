@@ -5,18 +5,25 @@
 	<link rel="stylesheet" href="global.css"/>
 </head>
 <body>
-	<div class="top"></div>
+	<div class="top">
+		<h1 id="logo">DT INTERACTIVE</h1>
+	</div>
 	<div id="democrat-list" class="column"></div>
 	<div id="map"></div>
 	<div id="panel">
 		<img id="portrait"/>
 		<div class="information">
 			<h1 id="name"></h1>
-			<h2 id="party"></h2>
 			<h4 id="address"></h4>
+			<h4 id="higher-ed">Higher Education: University of Texas @ Austin<h4>
+			<h4 id="party"></h4>
 		</div>
-		<div class="bills" id="primary">Sponsored</div>
-		<div class="bills" id="cosponsor">Cosponsored</div>
+		<div class="bills" id="primary">
+			<h2 class="title">Sponsored</h2>
+		</div>
+		<div class="bills" id="cosponsor">
+			<h2 class="title">Cosponsored</h2>
+		</div>
 		<div class="close" id="close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
 	</div>
 	<div id="bill-panel">
@@ -146,42 +153,42 @@
 		d3.select("#bill-close")
 		.on("click", closeBill);
 
-		var b = path.bounds(geoJSON),
-		s = .95 / Math.max((b[1][0] - b[0][0]) / width,
-			(b[1][1] - b[0][1]) / height),
-		t = [(width - s * (b[1][0] + b[0][0])) / 2,
-		(height - s * (b[1][1] + b[0][1])) / 2]
+		// var b = path.bounds(geoJSON),
+		// s = .95 / Math.max((b[1][0] - b[0][0]) / width,
+		// 	(b[1][1] - b[0][1]) / height),
+		// t = [(width - s * (b[1][0] + b[0][0])) / 2,
+		// (height - s * (b[1][1] + b[0][1])) / 2]
 
-		projection
-		.scale(s)
-		.translate(t);
+		// projection
+		// .scale(s)
+		// .translate(t);
 
-		g.selectAll("path")
-		.data(geoJSON.features)
-		.enter().append("path")
-		.attr("d", path)
-		.attr("class", function(d) {
-			if (d.properties.legislator === undefined) return "district";
-			return "district " + d.properties.legislator.party;
-		})
-		.on("click", clicked);
+		// g.selectAll("path")
+		// .data(geoJSON.features)
+		// .enter().append("path")
+		// .attr("d", path)
+		// .attr("class", function(d) {
+		// 	if (d.properties.legislator === undefined) return "district";
+		// 	return "district " + d.properties.legislator.party;
+		// })
+		// .on("click", clicked);
 
-		g.selectAll("text")
-		.data(geoJSON.features)
-		.enter().append("text")
-		.text(function(d) { return d.id ;})
-		.attr("x", function(d) { return path.centroid(d)[0]; })
-		.attr("y", function(d) { return path.centroid(d)[1]; })
-		.attr("text-anchor", "middle")
-		.attr("font-size", font_size_selection)
-		.attr("class", "district_no");
+		// g.selectAll("text")
+		// .data(geoJSON.features)
+		// .enter().append("text")
+		// .text(function(d) { return d.id ;})
+		// .attr("x", function(d) { return path.centroid(d)[0]; })
+		// .attr("y", function(d) { return path.centroid(d)[1]; })
+		// .attr("text-anchor", "middle")
+		// .attr("font-size", font_size_selection)
+		// .attr("class", "district_no");
 
-		g.append("path")
-		.datum(topojson.mesh(senate, 
-			senate.objects.senate, 
-			function(a, b) { return a !== b; }))
-		.attr("class", "mesh")
-		.attr("d", path);
+		// g.append("path")
+		// .datum(topojson.mesh(senate, 
+		// 	senate.objects.senate, 
+		// 	function(a, b) { return a !== b; }))
+		// .attr("class", "mesh")
+		// .attr("d", path);
 
 	});
 
@@ -190,16 +197,19 @@
 		closeBill();
 
 		d3.select("#portrait")
-		.attr("src", d.photo_url);
+		.attr("src", d.photo_url)
+		.style("border-color", function() {
+			return d.party == "Republican" ? "#bd4040" : "#4089bd";
+		});
 
 		d3.select("#name")
 		.html(d.full_name);
 
 		d3.select("#party")
-		.html(d.party);
+		.html("Party: "+d.party);
 
 		d3.select("#address")
-		.html(d.offices[0].address);
+		.html("Capitol Address: "+d.offices[0].address);
 
 		var a = d3.select("#primary")
 		.selectAll("div")

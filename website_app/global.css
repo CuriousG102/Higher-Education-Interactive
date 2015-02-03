@@ -1,3 +1,4 @@
+/*http://setmy.browsersize.com/1024x768*/
 /*******************************************************************************
 MeyerWeb Reset
 *******************************************************************************/
@@ -99,7 +100,7 @@ Global Styling
 
 html, body {
 	height: 100%;
-	font-family: "Helvetica Neue", Helvetica, Sans-serif;
+	font-family: "News Cycle","Arial Narrow Bold",sans-serif;
 }
 
 h1 {
@@ -115,15 +116,21 @@ h3 {
 }
 
 h4 {
-	font-size: 0.76em;
+	font-size: 0.85em;
 }
 
 .top {
 	height: 50px;
 	width: 100%;
-	background-color: black;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #C7C7CC;
 	position: absolute;
 	z-index: 4;
+}
+
+.top #logo{
+	margin: 6px 41px;
+	font-family: "Times New Roman", Times, serif;
 }
 
 #map {
@@ -143,25 +150,34 @@ h4 {
 
 #panel {
 	position: absolute;
+	min-width: 680px;
     top: -1024px;
     left: 16%;
     z-index: 2;
-    background-color: #FFFFFF;
     width: 68%;
-	height: calc(100% - 50px);
+	min-height: calc(100% - 50px);
 }
 
 .bills{
-	/*background-color: #DBDB8D;*/
 	width: 50%;
-	height: calc(100% - 270px);
+	/*height: calc(100% - 600px);*/
 	float: left;
 	text-align: center;
 	overflow: scroll;
+	height: 357px;
+
+}
+
+.bills .title {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #C7C7CC;
+	width: 200px;
+	margin: 0 auto 10px;
 }
 
 .column {
 	width: 16%;
+	min-width: 163px;
 	height: calc(100% - 50px);
 	margin: 50px 0 0 0;
 	/*background-color: #FC913A;*/
@@ -178,7 +194,8 @@ h4 {
 	/*text-align: center;*/
 	text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.4),
 		0 8px 13px rgba(0, 0, 0, 0.1),
-		0 18px 23px rgba(0, 0, 0, 0.1)
+		0 18px 23px rgba(0, 0, 0, 0.1);
+	font-size: 14px;
 }
 
 .list-item:hover{
@@ -245,16 +262,40 @@ h4 {
 #portrait {
 	width: 150px;
 	height: 150px;
-	border-radius: 75px;
-	margin: 10px auto;
+	border-radius: 90px;
+	border-style: solid;
+	border-width: 6px;
+	margin: 7px auto;
 	display: block;
 }
 
 .information {
-	height: 100px;
+	height: 90px;
 	text-align: center;
 }
 
+.information #name{
+	border-bottom: 1px solid #BDBDBD;
+    margin: 0 auto;
+    text-transform: uppercase;
+    width: 450px;
+}
+
+.information #party {
+	margin: 4px 0;
+}
+
+.information #address{
+	margin: 3px 0;
+}
+
+.information #bill-id {
+	font-size: 2.8em;
+	width: 200px;
+	margin: 15px auto;
+	border-bottom: 1px solid #C7C7CC;
+
+}
 .republican-district-num {
 	float: left;
 	text-align: left;
@@ -275,18 +316,7 @@ h4 {
 	text-align: left;
 }
 
-.information #party {
-	margin: 4px 0;
-}
 
-.information #address{
-	margin: 3px 0;
-}
-
-.information #bill-id {
-	font-size: 2.8em;
-	margin: 15px 0;
-}
 
 .close {
 	cursor: pointer;
