@@ -64,12 +64,17 @@ Map Styling
 	fill: #ccc;
 	cursor: pointer;
 }
-.district.active {
-	fill: purple;
+
+.district.active.Republican {
+	fill: #9A1919;
+}
+
+.district.active.Democratic {
+	fill: #003399;
 }
 
 .district:hover {
-	fill: orange;
+	fill: #259325;
 }
 .mesh {
 	fill: none;
@@ -82,15 +87,15 @@ Map Styling
 	pointer-events: none;
 }
 .Republican {
-	fill: red;
+	fill: #CC0000;
 }
 .Democratic {
-	fill: blue;
+	fill: #0066CC;
 }
 
 .bill-item h2:hover {
 	cursor: pointer;
-	color: blue;
+	color: #259325;
 }
 
 /*******************************************************************************
@@ -176,9 +181,9 @@ h4 {
 	/*background-color: #EDE574;*/
 	border-bottom: 1px solid #C7C7CC;
 	/*text-align: center;*/
-	text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.4),
+	/*text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.4),
 		0 8px 13px rgba(0, 0, 0, 0.1),
-		0 18px 23px rgba(0, 0, 0, 0.1)
+		0 18px 23px rgba(0, 0, 0, 0.1)*/
 }
 
 .list-item:hover{
@@ -197,24 +202,39 @@ h4 {
 }
 
 .dateContainer {
+	/*
 	float: left;
 	clear: left;
-}
-
-.dateContainer {
   	width: 370px;
 	height: 30px;
+	*/
+	width: 200px;
+	margin-left: 8px;
+	margin-top: 5px;
+	background: #CC5200;
+	text-align: center;
+	float: left;
+}
+
+#firstContainer, #signedContainer {
+	height: 70px;
+}
+
+#firstContainer .actionDate {
+	margin-top: 5px;
+	height: 30px;
+}
+
+#lowerContainer, #upperContainer {
+	height: 30px;
+}
+
+.passed .dateContainer {
+	background: #D67533;
 }
 
 .actionDate {
-	float: left;
-	clear: left;
-	text-align: left;
-	vertical-align: center;
-	width: 200px;
-	height: 30px;
-	margin: 4px;
-	background: blue;
+	margin: auto;
 	font-size: 1em;
 	color: gray;
 }
@@ -225,7 +245,8 @@ h4 {
 
 .date {
 	color: gray;
-	float: left;
+	margin: auto;
+	margin-top: 7px;
 }
 
 #billTexts, .billTextLink {
