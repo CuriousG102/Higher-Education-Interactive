@@ -34,15 +34,16 @@ def produceBillJSONFiles(files_destination):
         os.makedirs(files_destination)
 
     for bill in bills:
-        for subject in bill['scraped_subjects']:
-            if 'Education--Higher' in subject:
-                filePath = os.path.join(files_destination, bill['id'] + '.json')
-                with io.open(filePath, mode='w', encoding='utf8') as f:
-                    jsonDump = json.dumps(obj=bill, 
-                                          ensure_ascii=False, 
-                                          separators=(',',':'))
-                    f.write(jsonDump)
-                break
+        if 'scraped_subjects' in bill:
+            for subject in bill['scraped_subjects']:
+                if 'Education--Higher' in subject:
+                    filePath = os.path.join(files_destination, bill['id'] + '.json')
+                    with io.open(filePath, mode='w', encoding='utf8') as f:
+                        jsonDump = json.dumps(obj=bill, 
+                                              ensure_ascii=False, 
+                                              separators=(',',':'))
+                        f.write(jsonDump)
+                    break
 
 
 def addToBills(bills):
