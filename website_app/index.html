@@ -29,22 +29,22 @@
 	<div id="bill-panel">
 		<div class="information">
 			<h1 id="bill-id"></h1>
-			<h3 id="descripton"></h3>
+			<h3 id="description"></h3>
 			<div class="timeline">
 				<div class="dateContainer" id="firstContainer">
-					<h4 class="actionDate" id="first">Introduced</h4>
+					<h3 class="actionDate" id="first">Introduced</h3>
 					<h4 class="date" id="firstDate"></h4>
 				</div>
 				<div class="dateContainer" id="lowerContainer">
-					<h4 class="actionDate" id="lower">Passed the House</h4>
+					<h3 class="actionDate" id="lower">Passed the House</h3>
 					<h4 class="date" id="lowerDate"></h4>
 				</div>
 				<div class="dateContainer" id="upperContainer">
-					<h4 class="actionDate" id="upper">Passed the Senate</h4>
+					<h3 class="actionDate" id="upper">Passed the Senate</h3>
 					<h4 class="date" id="upperDate"></h4>
 				</div>
 				<div class="dateContainer" id="signedContainer">
-					<h4 class="actionDate" id="signed">Signed by the Governor</h4>
+					<h3 class="actionDate" id="signed">Signed by the Governor</h3>
 					<h4 class="date" id="signedDate"></h4>
 				</div>
 			</div>
@@ -274,17 +274,20 @@
   			d3.select("#bill-id")
   			.html(json.bill_id);
 
-  			d3.select("#descripton")
+  			d3.select("#description")
   			.html(json.title);
 
   			// Set up our timeline for different styling based on passage (or lack thereof)
   			// bills and adds the date of passage as a detail for each step
   			d3.select("#firstContainer").classed("passed", json.action_dates.first);
   			d3.select("#firstDate").html(formatDate(json.action_dates.first));
+
   			d3.select("#lowerContainer").classed("passed", json.action_dates.passed_lower);
   			d3.select("#lowerDate").html(formatDate(json.action_dates.passed_lower));
+
   			d3.select("#upperContainer").classed("passed", json.action_dates.passed_upper);
   			d3.select("#upperDate").html(formatDate(json.action_dates.passed_upper));
+
   			d3.select("#signedContainer").classed("passed", json.action_dates.signed);
   			d3.select("#signedDate").html(formatDate(json.action_dates.signed));
 

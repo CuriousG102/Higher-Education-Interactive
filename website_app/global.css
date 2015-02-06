@@ -89,11 +89,6 @@ Map Styling
 	fill: blue;
 }
 
-.bill-item h2:hover {
-	cursor: pointer;
-	color: blue;
-}
-
 /*******************************************************************************
 Global Styling
 *******************************************************************************/
@@ -214,26 +209,20 @@ h4 {
 }
 
 .dateContainer {
+	border-right: 1px solid black;
+	height: 30px;
+	width: 24.89%;
+	font-size: 15px;
 	float: left;
-	clear: left;
 }
 
-.dateContainer {
-  	width: 370px;
-	height: 30px;
+.timeline div:last-child {
+	border-right: none;
 }
 
-.actionDate {
-	float: left;
-	clear: left;
-	text-align: left;
-	vertical-align: center;
-	width: 200px;
-	height: 30px;
-	margin: 4px;
-	background: blue;
-	font-size: 1em;
-	color: gray;
+.timeline {
+	margin: 30px 10px;
+	height: 100px;
 }
 
 .passed .actionDate{
@@ -242,7 +231,6 @@ h4 {
 
 .date {
 	color: gray;
-	float: left;
 }
 
 #billTexts, .billTextLink {
@@ -294,8 +282,12 @@ h4 {
 	width: 200px;
 	margin: 15px auto;
 	border-bottom: 1px solid #C7C7CC;
-
 }
+
+.information #description {
+	margin: 10px;
+}
+
 .republican-district-num {
 	float: left;
 	text-align: left;
@@ -316,7 +308,14 @@ h4 {
 	text-align: left;
 }
 
+.bill-item {
+	margin: 8px 0;
+}
 
+.bill-item h2:hover {
+	cursor: pointer;
+	color: blue;
+}
 
 .close {
 	cursor: pointer;
