@@ -9,9 +9,14 @@
 		<img src="images/nameplate_desktop.png"/>
 	</div>
 	<div id="democrat-list" class="column"></div>
-	<div id="map"><h1><span class="bold">DT</span> <br>Interactives</h1></div>
+	<div id="map">
+		<img id="zoomOut" src="images/up-arrow-circle-hi.png"/>
+		<h1><span class="bold">DT</span> <br>Interactives</h1>
+	</div>
 	<div id="panel">
-		<img id="portrait"/>
+		<div id="portraitContainer">
+			<img id="portrait"/>
+		</div>
 		<div class="information">
 			<h1 id="name"></h1>
 			<h4 id="address"></h4>
@@ -51,6 +56,10 @@
 			<div id="billTexts">
 				<h3>Bill Versions</h3>
 				<ul></ul>
+			</div>
+			<div id="bill-summary">
+				<h3 id="bill-summary-head"></h3>
+				<p id="bill-summary-paragraph"></p>
 			</div>
 		</div>
 		<div class="close" id="bill-close"><img src="images/up-arrow-circle-hi.png"/></div>
@@ -102,9 +111,6 @@
 		if (error) return console.error(error);
 		geoJSON = topojson.feature(senate, senate.objects.senate);
 
-		// console.log(senate.objects.senate.geometries);
-		// console.log(geoJSON);
-
 		var republican = [];
 		var democrat = [];
 
@@ -119,7 +125,6 @@
 			}
 		}
 
-		console.log(senate);
 		var rl = d3.select("#republican-list")
 		.selectAll("div")
 		.data(republican)
@@ -200,7 +205,9 @@
 		closeBill();
 
 		d3.select("#portrait")
-		.attr("src", d.photo_url)
+		.attr("src", function() { return d.photo_url.replace("small", "large"); })
+		
+		d3.select("#portraitContainer")
 		.style("border-color", function() {
 			return d.party == "Republican" ? "#bd4040" : "#4089bd";
 		});
@@ -211,8 +218,10 @@
 		d3.select("#party")
 		.html("Party: "+d.party);
 
-		d3.select("higher-ed")
-		.html("Higher Education: " + d["Higher Education"])
+		d3.select("#higher-ed")
+		.html(function() { if ( !(d["Higher Education"] == "") ) {
+			                	return "Higher Education: " + d["Higher Education"];
+			                } else { return ""; }});
 
 		d3.select("#address")
 		.html("Capitol Address: "+d.offices[0].address);
@@ -311,6 +320,10 @@
 
   			billTexts.exit().remove();
 
+  			d3.select("#bill-summary-head").html(function() { if (json["Bill Summary"] == "") return "";
+  		                                                 else return "Bill Summary";});
+  			d3.select("#bill-summary-paragraph").html(json["Bill Summary"]);
+
 		});
 
 		d3.select("#bill-panel")
@@ -356,6 +369,7 @@
 		}
 		active.classed("active", false);
 		active = d3.select(this).classed("active", true);
+		d3.select("#zoomOut").classed("active", true).on("click", reset);
 		percent_svg_to_fill = .4;
 
 		var bounds = path.bounds(d),
@@ -400,6 +414,7 @@
 	function reset() {
 		active.classed("active", false);
 		active = d3.select(null);
+		d3.select("#zoomOut").classed("active", false);
 
 		g.transition()
 		.duration(750)
