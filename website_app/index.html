@@ -5,39 +5,46 @@
 	<link rel="stylesheet" href="global.css"/>
 </head>
 <body>
-	<div class="top"></div>
+	<div class="top">
+		<img src="images/nameplate_desktop.png"/>
+	</div>
 	<div id="democrat-list" class="column"></div>
-	<div id="map"></div>
+	<div id="map"><h1><span class="bold">DT</span> <br>Interactives</h1></div>
 	<div id="panel">
 		<img id="portrait"/>
 		<div class="information">
 			<h1 id="name"></h1>
-			<h2 id="party"></h2>
 			<h4 id="address"></h4>
+			<h4 id="higher-ed">Higher Education: University of Texas @ Austin<h4>
+			<h4 id="party"></h4>
 		</div>
-		<div class="bills" id="primary">Sponsored</div>
-		<div class="bills" id="cosponsor">Cosponsored</div>
+		<div class="bills" id="primary">
+			<h2 class="title">Sponsored</h2>
+		</div>
+		<div class="bills" id="cosponsor">
+			<h2 class="title">Cosponsored</h2>
+		</div>
 		<div class="close" id="close"><img src="http://www.clker.com/cliparts/8/7/Y/H/W/e/up-arrow-circle-hi.png"/></div>
 	</div>
 	<div id="bill-panel">
 		<div class="information">
 			<h1 id="bill-id"></h1>
-			<h3 id="descripton"></h3>
+			<h3 id="description"></h3>
 			<div class="timeline">
 				<div class="dateContainer" id="firstContainer">
-					<h4 class="actionDate" id="first">Introduced</h4>
+					<h3 class="actionDate" id="first">Introduced</h3>
 					<h4 class="date" id="firstDate"></h4>
 				</div>
 				<div class="dateContainer" id="lowerContainer">
-					<h4 class="actionDate" id="lower">Passed the House</h4>
+					<h3 class="actionDate" id="lower">Passed the House</h3>
 					<h4 class="date" id="lowerDate"></h4>
 				</div>
 				<div class="dateContainer" id="upperContainer">
-					<h4 class="actionDate" id="upper">Passed the Senate</h4>
+					<h3 class="actionDate" id="upper">Passed the Senate</h3>
 					<h4 class="date" id="upperDate"></h4>
 				</div>
 				<div class="dateContainer" id="signedContainer">
-					<h4 class="actionDate" id="signed">Signed by the Governor</h4>
+					<h3 class="actionDate" id="signed">Signed by the Governor</h3>
 					<h4 class="date" id="signedDate"></h4>
 				</div>
 			</div>
@@ -190,16 +197,19 @@
 		closeBill();
 
 		d3.select("#portrait")
-		.attr("src", d.photo_url);
+		.attr("src", d.photo_url)
+		.style("border-color", function() {
+			return d.party == "Republican" ? "#bd4040" : "#4089bd";
+		});
 
 		d3.select("#name")
 		.html(d.full_name);
 
 		d3.select("#party")
-		.html(d.party);
+		.html("Party: "+d.party);
 
 		d3.select("#address")
-		.html(d.offices[0].address);
+		.html("Capitol Address: "+d.offices[0].address);
 
 		var a = d3.select("#primary")
 		.selectAll("div")
@@ -264,17 +274,20 @@
   			d3.select("#bill-id")
   			.html(json.bill_id);
 
-  			d3.select("#descripton")
+  			d3.select("#description")
   			.html(json.title);
 
   			// Set up our timeline for different styling based on passage (or lack thereof)
   			// bills and adds the date of passage as a detail for each step
   			d3.select("#firstContainer").classed("passed", json.action_dates.first);
   			d3.select("#firstDate").html(formatDate(json.action_dates.first));
+
   			d3.select("#lowerContainer").classed("passed", json.action_dates.passed_lower);
   			d3.select("#lowerDate").html(formatDate(json.action_dates.passed_lower));
+
   			d3.select("#upperContainer").classed("passed", json.action_dates.passed_upper);
   			d3.select("#upperDate").html(formatDate(json.action_dates.passed_upper));
+
   			d3.select("#signedContainer").classed("passed", json.action_dates.signed);
   			d3.select("#signedDate").html(formatDate(json.action_dates.signed));
 
