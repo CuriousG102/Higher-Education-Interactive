@@ -107,6 +107,12 @@ html, body {
 	font-family: "News Cycle","Arial Narrow Bold",sans-serif;
 }
 
+html {
+	min-width: 1050px;
+	min-height: 650px;
+	position:relative;
+}
+
 h1 {
 	font-size: 2em;
 }
@@ -129,7 +135,7 @@ h4 {
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #C7C7CC;
 	position: absolute;
-	z-index: 4;
+	z-index: 5;
 }
 
 .top img{
@@ -155,6 +161,7 @@ h4 {
 	margin: 10px 10px;
 	font-family: "Times New Roman, Times, serif";
 	font-size: 20px;
+	z-index: 2;
 }
 
 .bold {
@@ -165,8 +172,12 @@ h4 {
 }
 
 #map svg {
+	margin-left: auto;
+	margin-right: auto;
 	width: 100%;
-	height: calc(100% - 50px);
+	/* height: calc(100% - 50px); */
+	height: 100%;
+	position: relative;
 }
 
 #panel {
@@ -174,7 +185,7 @@ h4 {
 	min-width: 680px;
     top: -1024px;
     left: 16%;
-    z-index: 2;
+    z-index: 3;
     width: 68%;
 	min-height: calc(100% - 50px);
 	background-color: #FFFFFF;
@@ -224,10 +235,11 @@ h4 {
 	position: absolute;
     top: -1024px;
     left: 16%;
-    z-index: 3;
+    z-index: 4;
     background-color: #FFFFFF;
     width: 68%;
 	height: calc(100% - 50px);
+	position:absolute;
 }
 
 .dateContainer {
@@ -269,7 +281,9 @@ h4 {
 }
 
 .timeline {
-	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
 	height: 150px;
 	width: 630px;
 	position: relative;
@@ -300,7 +314,7 @@ h4 {
 
 .actionDate {
 	margin: auto;
-	color: gray;
+	color: white;
 }
 
 .passed .actionDate{
