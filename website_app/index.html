@@ -7,6 +7,7 @@
 <body>
 	<div class="top">
 		<img src="images/nameplate_desktop.png"/>
+		<a class="btn" href=""></a>
 	</div>
 	<div id="democrat-list" class="column"></div>
 	<div id="map">
@@ -78,6 +79,8 @@
 	height = 600,
 	active = d3.select(null);
 
+	var senateIsDisplayed = true;
+
 	var projection = d3.geo.mercator()
 	.scale(1)
 	.translate([0, 0]);
@@ -107,98 +110,127 @@
 		}
 	}
 
-	d3.json("enhancedSenate.json", function(error, senate) {
-		if (error) return console.error(error);
-		geoJSON = topojson.feature(senate, senate.objects.senate);
+	d3.select(".btn").on("click", toggle);
 
-		var republican = [];
-		var democrat = [];
+	function toggle() {
+		if (senateIsPlayed) load_house();
+		else load_senate();
+	}
 
-		var arrayLength = senate.objects.senate.geometries.length;
-		for (var i = 0; i < arrayLength; i++) {
-			try{
-				senate.objects.senate.geometries[i].properties.legislator.party == "Republican" ?
-					republican.push(senate.objects.senate.geometries[i].properties.legislator) :
-					democrat.push(senate.objects.senate.geometries[i].properties.legislator);
-			}catch(e){
-				// console.log("undefined key");
+	load_senate();
+
+	function load_senate() {
+		d3.select(".btn").html("Senate");
+		var senateIsDisplayed = true;
+		d3.json("enhancedSenate.json", function(error, senate) {
+			if (error) return console.error(error);
+			geoJSON = topojson.feature(senate, senate.objects.senate);
+
+			var republican = [];
+			var democrat = [];
+
+			var arrayLength = senate.objects.senate.geometries.length;
+			for (var i = 0; i < arrayLength; i++) {
+				try{
+					senate.objects.senate.geometries[i].properties.legislator.party == "Republican" ?
+						republican.push(senate.objects.senate.geometries[i].properties.legislator) :
+						democrat.push(senate.objects.senate.geometries[i].properties.legislator);
+				}catch(e){
+					// console.log("undefined key");
+				}
 			}
-		}
 
-		var rl = d3.select("#republican-list")
-		.selectAll("div")
-		.data(republican)
-		.enter().append("div")
-		.attr("class", "list-item")
-		.on("click", dropRep);
+			var rl = d3.select("#republican-list")
+			.selectAll("div")
+			.data(republican);
 
-		rl.append("div")
-		.attr("class", "republican-district-num")
-		.html(function(d){ return d.district; });
+			var rlEnter = rl.enter().append("div")
+						  .attr("class", "list-item")
+						  .on("click", dropRep);
 
-		rl.append("div")
-		.attr("class", "republican-representative-name")
-		.html(function(d){ return d.full_name; });
+			rlEnter.append("div")
+			.attr("class", "republican-district-num")
+			.html(function(d){ return d.district; });
 
-		var dl = d3.select("#democrat-list")
-		.selectAll("div")
-		.data(democrat)
-		.enter().append("div")
-		.attr("class", "list-item")
-		.on("click", dropRep);
+			rlEnter.append("div")
+			.attr("class", "republican-representative-name")
+			.html(function(d){ return d.full_name; });
 
-		dl.append("div")
-		.attr("class", "democrat-representative-name")
-		.html(function(d){ return d.full_name; });
+			rl.exit().remove();
 
-		dl.append("div")
-		.attr("class", "democrat-district-num")
-		.html(function(d){ return d.district; });
+			var dl = d3.select("#democrat-list")
+			.selectAll("div")
+			.data(democrat);
 
-		d3.select("#close")
-		.on("click", close);
+			var dlEnter = dl.enter().append("div")
+						  .attr("class", "list-item")
+						  .on("click", dropRep);
 
-		d3.select("#bill-close")
-		.on("click", closeBill);
+			dlEnter.append("div")
+			.attr("class", "democrat-representative-name")
+			.html(function(d){ return d.full_name; });
 
-		var b = path.bounds(geoJSON),
-		s = .95 / Math.max((b[1][0] - b[0][0]) / width,
-			(b[1][1] - b[0][1]) / height),
-		t = [(width - s * (b[1][0] + b[0][0])) / 2,
-		(height - s * (b[1][1] + b[0][1])) / 2]
+			dlEnter.append("div")
+			.attr("class", "democrat-district-num")
+			.html(function(d){ return d.district; });
 
-		projection
-		.scale(s)
-		.translate(t);
+			dl.exit().remove();
 
-		g.selectAll("path")
-		.data(geoJSON.features)
-		.enter().append("path")
-		.attr("d", path)
-		.attr("class", function(d) {
-			if (d.properties.legislator === undefined) return "district";
-			return "district " + d.properties.legislator.party;
-		})
-		.on("click", clicked);
+			d3.select("#close")
+			.on("click", close);
 
-		g.selectAll("text")
-		.data(geoJSON.features)
-		.enter().append("text")
-		.text(function(d) { return d.id ;})
-		.attr("x", function(d) { return path.centroid(d)[0]; })
-		.attr("y", function(d) { return path.centroid(d)[1]; })
-		.attr("text-anchor", "middle")
-		.attr("font-size", font_size_selection)
-		.attr("class", "district_no");
+			d3.select("#bill-close")
+			.on("click", closeBill);
 
-		g.append("path")
-		.datum(topojson.mesh(senate, 
-			senate.objects.senate, 
-			function(a, b) { return a !== b; }))
-		.attr("class", "mesh")
-		.attr("d", path);
+			var b = path.bounds(geoJSON),
+			s = .95 / Math.max((b[1][0] - b[0][0]) / width,
+				(b[1][1] - b[0][1]) / height),
+			t = [(width - s * (b[1][0] + b[0][0])) / 2,
+			(height - s * (b[1][1] + b[0][1])) / 2]
 
-	});
+			projection
+			.scale(s)
+			.translate(t);
+
+			var gPath = g.selectAll("path")
+						.data(geoJSON.features)
+
+			var gPathEnter = gPath
+							 .enter().append("path")
+							 .attr("d", path)
+							 .attr("class", function(d) {
+								 if (d.properties.legislator === undefined) return "district";
+								 return "district " + d.properties.legislator.party;
+							 })
+							 .on("click", clicked);
+
+			gPath.exit().remove();
+
+			var gText = g.selectAll("text")
+						.data(geoJSON.features);
+
+			var gTextEnter = gText
+							 .enter().append("text")
+							 .text(function(d) { return d.id ;})
+							 .attr("x", function(d) { return path.centroid(d)[0]; })
+							 .attr("y", function(d) { return path.centroid(d)[1]; })
+							 .attr("text-anchor", "middle")
+							 .attr("font-size", font_size_selection)
+							 .attr("class", "district_no");
+
+			gText.exit().remove();
+
+			g.select(".mesh").remove();
+
+			g.append("path")
+			.datum(topojson.mesh(senate, 
+				senate.objects.senate, 
+				function(a, b) { return a !== b; }))
+			.attr("class", "mesh")
+			.attr("d", path);
+
+		});
+	}
 
 	function dropRep(d) {
 		console.log(d);

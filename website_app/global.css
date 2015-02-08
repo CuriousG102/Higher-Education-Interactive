@@ -54,6 +54,34 @@ Clearfixes
 /*******************************************************************************
 Map Styling
 *******************************************************************************/
+.btn {
+  background: #d99734;
+  background-image: -webkit-linear-gradient(top, #d99734, #b8572b);
+  background-image: -moz-linear-gradient(top, #d99734, #b8572b);
+  background-image: -ms-linear-gradient(top, #d99734, #b8572b);
+  background-image: -o-linear-gradient(top, #d99734, #b8572b);
+  background-image: linear-gradient(to bottom, #d99734, #b8572b);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 5px 20px 5px 20px;
+  margin:8px;
+  float: right;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
 
 .background {
 	fill: none;
