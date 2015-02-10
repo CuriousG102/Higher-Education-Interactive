@@ -4,7 +4,7 @@ import io
 def generate():
 	infoToJSON.produceBillJSONFiles('bills')
 	enhanceJSON('enhancedSenate.json', 'senate.json', 'upper')
-	# enhanceJSON('enhancedHouse.json', 'house.json', 'lower')
+	enhanceJSON('enhancedHouse.json', 'house.json', 'lower')
 
 def enhanceJSON(enhancedName, sourceName, chamber):
 	with io.open(enhancedName, mode='w', encoding='utf8') as f:
