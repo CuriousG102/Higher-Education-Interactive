@@ -27,6 +27,7 @@ def generateCopyTemplate(file_destination):
             for subject in bill['scraped_subjects']:
                 if 'Education--Higher' in subject:
                     billsToCopySheet.append(bill)
+                    break
 
 
     if (not os.path.exists(file_destination)) and (not file_destination == ''):
