@@ -1,10 +1,13 @@
-import infoToJSON
+import settings
 import io
+import os
+
+import infoToJSON
 
 def generate():
-	infoToJSON.produceBillJSONFiles('bills')
-	enhanceJSON('enhancedSenate.json', 'senate.json', 'upper')
-	enhanceJSON('enhancedHouse.json', 'house.json', 'lower')
+	infoToJSON.produceBillJSONFiles(os.path.join(settings.web_files_path, 'bills'))
+	enhanceJSON(os.path.join(settings.web_files_path, 'enhancedSenate.json'), 'senate.json', 'upper')
+	enhanceJSON(os.path.join(settings.web_files_path, 'enhancedHouse.json'), 'house.json', 'lower')
 
 def enhanceJSON(enhancedName, sourceName, chamber):
 	with io.open(enhancedName, mode='w', encoding='utf8') as f:
