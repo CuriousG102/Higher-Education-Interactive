@@ -34,7 +34,7 @@ def produceBillJSONFiles(files_destination):
         os.makedirs(files_destination)
 
     for bill in bills:
-        if 'scraped_subjects' in bill:
+        try:
             for subject in bill['scraped_subjects']:
                 if 'Education--Higher' in subject:
                     filePath = os.path.join(files_destination, bill['id'] + '.json')
@@ -44,6 +44,8 @@ def produceBillJSONFiles(files_destination):
                                               separators=(',',':'))
                         f.write(jsonDump)
                     break
+        except KeyError:
+            continue
 
 
 def addToBills(bills):
@@ -91,10 +93,13 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
     bills = openstates.bills(state="tx", search_window="session", 
                              fields=bill_fields)
     for bill in bills:
-        for subject in bill['scraped_subjects']:
-            if 'Education--Higher' in subject:
-                addSponsorsToSet(legislator_id_set, bill)
-                break
+        try:
+            for subject in bill['scraped_subjects']:
+                if 'Education--Higher' in subject:
+                    addSponsorsToSet(legislator_id_set, bill)
+                    break
+        except KeyError:
+            continue
 
     decoder = json.JSONDecoder()
     geoJSON = decoder.decode(geoJSONString)
