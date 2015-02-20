@@ -7,7 +7,8 @@
 <body>
 	<div class="top">
 		<img src="images/nameplate_desktop.png"/>
-		<a class="btn" id="toggleButton" href="house.html">Senate</a>
+		<!-- <text id="title"> I'm a title </text> -->
+		<a class="btn" id="toggleButton" href="house.html">Switch to House</a>
 	</div>
 	<div id="democrat-list" class="column">
 		<div class="democrat-representative-name">REPUBLICANS</div>
@@ -35,7 +36,7 @@
 			<h2 class="title">Higher Education Bills Sponsored</h2>
 		</div>
 		<div class="bills" id="cosponsor">
-			<h2 class="title">HIgher Education Bills Cosponsored</h2>
+			<h2 class="title">HIgher Education Bills Co-sponsored</h2>
 		</div>
 		<div class="close" id="close"><img src="images/up-arrow-circle-hi.png"/></div>
 
@@ -152,6 +153,13 @@
 			var rl = d3.select("#republican-list")
 			.selectAll("div").data(republican);
 
+			d3.select("#republican-list")
+			.append("div")
+			.attr("class", "list-item")
+			.append("div")
+			.attr("class", "select-a-person")
+			.html("Select a senator");
+
 			var rlEnter = rl.enter().append("div")
 						  .attr("class", "list-item")
 						  .on("click", dropRep);
@@ -170,6 +178,13 @@
 			var dl = d3.select("#democrat-list")
 			.selectAll("div")
 			.data(democrat);
+
+			d3.select("#democrat-list")
+			.append("div")
+			.attr("class", "list-item")
+			.append("div")
+			.attr("class", "select-a-person")
+			.html("Select a senator");
 
 			var dlEnter = dl.enter().append("div")
 						  .attr("class", "list-item")
@@ -235,115 +250,6 @@
 		});
 	}
 
-	function load_house() {
-		senateIsDisplayed = false;
-		d3.json("enhancedHouse.json", function(error, house) {
-			if (error) return console.error(error);
-			geoJSON = topojson.feature(house, house.objects.house);
-
-			var republican = [];
-			var democrat = [];
-
-			var arrayLength = house.objects.house.geometries.length;
-			for (var i = 0; i < arrayLength; i++) {
-				try{
-					house.objects.house.geometries[i].properties.legislator.party == "Republican" ?
-						republican.push(house.objects.house.geometries[i].properties.legislator) :
-						democrat.push(house.objects.house.geometries[i].properties.legislator);
-				}catch(e){
-					// console.log("undefined key");
-				}
-			}
-
-			d3.select("#republican-list")
-			.selectAll("div").remove()
-
-			var rl = d3.select("#republican-list")
-			.selectAll("div").data(republican);
-
-			var rlEnter = rl.enter().append("div")
-						  .attr("class", "list-item")
-						  .on("click", dropRep);
-
-			rlEnter.append("div")
-			.attr("class", "republican-district-num")
-			.html(function(d){ return d.district; });
-
-			rlEnter.append("div")
-			.attr("class", "republican-representative-name")
-			.html(function(d){ return d.full_name; });
-
-			d3.select("#democrat-list")
-			.selectAll("div").remove();
-
-			var dl = d3.select("#democrat-list")
-			.selectAll("div")
-			.data(democrat);
-
-			var dlEnter = dl.enter().append("div")
-						  .attr("class", "list-item")
-						  .on("click", dropRep);
-
-			dlEnter.append("div")
-			.attr("class", "democrat-representative-name")
-			.html(function(d){ return d.full_name; });
-
-			dlEnter.append("div")
-			.attr("class", "democrat-district-num")
-			.html(function(d){ return d.district; });
-
-			
-
-			var b = path.bounds(geoJSON),
-			s = .95 / Math.max((b[1][0] - b[0][0]) / width,
-				(b[1][1] - b[0][1]) / height),
-			t = [(width - s * (b[1][0] + b[0][0])) / 2,
-			(height - s * (b[1][1] + b[0][1])) / 2]
-
-			projection
-			.scale(s)
-			.translate(t);
-
-			g.selectAll("path").remove();
-
-			var gPath = g.selectAll("path")
-						.data(geoJSON.features)
-
-			var gPathEnter = gPath
-							 .enter().append("path")
-							 .attr("d", path)
-							 .attr("class", function(d) {
-								 if (d.properties.legislator === undefined) return "district";
-								 return "district " + d.properties.legislator.party;
-							 })
-							 .on("click", clicked);
-
-			g.selectAll("text").remove();
-
-			var gText = g.selectAll("text")
-						.data(geoJSON.features);
-
-			var gTextEnter = gText
-							 .enter().append("text")
-							 .text(function(d) { return d.id ;})
-							 .attr("x", function(d) { return path.centroid(d)[0]; })
-							 .attr("y", function(d) { return path.centroid(d)[1]; })
-							 .attr("text-anchor", "middle")
-							 .attr("font-size", font_size_selection)
-							 .attr("class", "district_no");
-
-			g.select(".mesh").remove();
-
-			g.append("path")
-			.datum(topojson.mesh(house, 
-				house.objects.house, 
-				function(a, b) { return a !== b; }))
-			.attr("class", "mesh")
-			.attr("d", path);
-
-		});
-	}
-
 	function dropRep(d) {
 		console.log(d);
 		closeBill();
@@ -378,6 +284,14 @@
 		.selectAll("div")
 		.data(d.higher_ed_bills.primary, function(d) { return d; });
 
+		if (d.higher_ed_bills.primary.length != 0) {
+			d3.select("#primary")
+			.append("div")
+			.attr("class", "bill-item")
+			.append("h2")
+			.html("Select a bill");
+		}
+
 		a.enter().append("div")
 		.attr("class", "bill-item")
 		.append("h2")
@@ -395,6 +309,14 @@
 		var b = d3.select("#cosponsor")
 		.selectAll("div")
 		.data(d.higher_ed_bills.cosponsor, function(d) { return d; });
+
+		if (d.higher_ed_bills.cosponsor.length != 0) {
+			d3.select("#cosponsor")
+			.append("div")
+			.attr("class", "bill-item")
+			.append("h2")
+			.html("Select a bill");
+		}
 
 		b.enter().append("div")
 		.attr("class", "bill-item")

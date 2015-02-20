@@ -7,7 +7,7 @@
 <body>
 	<div class="top">
 		<img src="images/nameplate_desktop.png"/>
-		<a class="btn" id="toggleButton" href="index.html">House</a>
+		<a class="btn" id="toggleButton" href="index.html">Switch to Senate</a>
 	</div>
 	<div id="democrat-list" class="column"></div>
 	<div id="map">
@@ -30,7 +30,7 @@
 			<h2 class="title">Higher Education Bills Sponsored</h2>
 		</div>
 		<div class="bills" id="cosponsor">
-			<h2 class="title">Higher Education Bills Cosponsored</h2>
+			<h2 class="title">Higher Education Bills Co-sponsored</h2>
 		</div>
 		<div class="close" id="close"><img src="images/up-arrow-circle-hi.png"/></div>
 	</div>
@@ -146,6 +146,13 @@
 			var rl = d3.select("#republican-list")
 			.selectAll("div").data(republican);
 
+			d3.select("#republican-list")
+			.append("div")
+			.attr("class", "list-item")
+			.append("div")
+			.attr("class", "select-a-person")
+			.html("Select a representative");
+
 			var rlEnter = rl.enter().append("div")
 						  .attr("class", "list-item")
 						  .on("click", dropRep);
@@ -164,6 +171,13 @@
 			var dl = d3.select("#democrat-list")
 			.selectAll("div")
 			.data(democrat);
+
+			d3.select("#democrat-list")
+			.append("div")
+			.attr("class", "list-item")
+			.append("div")
+			.attr("class", "select-a-person")
+			.html("Select a representative");
 
 			var dlEnter = dl.enter().append("div")
 						  .attr("class", "list-item")
@@ -259,6 +273,14 @@
 		.selectAll("div")
 		.data(d.higher_ed_bills.primary, function(d) { return d; });
 
+		if (d.higher_ed_bills.primary.length != 0) {
+			d3.select("#primary")
+			.append("div")
+			.attr("class", "bill-item")
+			.append("h2")
+			.html("Select a bill");
+		}
+
 		a.enter().append("div")
 		.attr("class", "bill-item")
 		.append("h2")
@@ -276,6 +298,14 @@
 		var b = d3.select("#cosponsor")
 		.selectAll("div")
 		.data(d.higher_ed_bills.cosponsor, function(d) { return d; });
+
+		if (d.higher_ed_bills.cosponsor.length != 0) {
+			d3.select("#cosponsor")
+			.append("div")
+			.attr("class", "bill-item")
+			.append("h2")
+			.html("Select a bill");
+		}
 
 		b.enter().append("div")
 		.attr("class", "bill-item")

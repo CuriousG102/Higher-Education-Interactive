@@ -122,11 +122,6 @@ Map Styling
 	fill: #0066CC;
 }
 
-.bill-item h2:hover {
-	cursor: pointer;
-	color: #259325;
-}
-
 /*******************************************************************************
 Global Styling
 *******************************************************************************/
@@ -165,6 +160,12 @@ h4 {
 	border-bottom: 1px solid #C7C7CC;
 	position: absolute;
 	z-index: 5;
+}
+
+#title {
+	width: 200px;
+	height: 40px;
+	margin: 5px;
 }
 
 .top img{
@@ -275,10 +276,9 @@ h4 {
 }
 
 .bills .title {
-	margin-bottom: 10px;
 	border-bottom: 1px solid #C7C7CC;
-	width: 200px;
-	margin: 0 auto 10px;
+	width: 300px;
+	margin: 0 auto;
 }
 
 .column {
@@ -289,6 +289,11 @@ h4 {
 	/*background-color: #FC913A;*/
 	float: left;
 	overflow: scroll;
+}
+
+.select-a-person {
+	text-align: center;
+	font-size: 16px;
 }
 
 #republican-list {
@@ -331,11 +336,6 @@ h4 {
 
 .passed {
 	background: #CC5200;
-}
-
-.dateContainer:hover {
-	background: #FF9933;
-	cursor: pointer;
 }
 
 #firstContainer { 
@@ -515,12 +515,24 @@ h4 {
 }
 
 .bill-item {
-	margin: 8px 0;
+	margin: auto;
+	padding: 10px;
+	height: 35px;
+	width: 300px;
+	border-bottom: 1px solid #c7c7cc;
+}
+
+.bill-item h2 {
+	margin-top: 8px;
+}
+
+.bill-item:hover {
+	background: #D7DBDB;
+	cursor: pointer;
 }
 
 .bill-item h2:hover {
 	cursor: pointer;
-	color: blue;
 }
 
 .close {
