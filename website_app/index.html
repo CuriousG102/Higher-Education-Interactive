@@ -294,6 +294,7 @@
 
 		a.enter().append("div")
 		.attr("class", "bill-item")
+		.on("click", dropBill)
 		.append("h2")
 		.attr("id", function(d){ return d; })
 		.html(function(d){
@@ -301,8 +302,7 @@
 	  			if (error) return console.warn(error);
 	  			d3.select("#"+d).html(json.bill_id);
 			});
-		})
-		.on("click", dropBill);
+		});
 	
 		a.exit().remove();
 
@@ -320,6 +320,7 @@
 
 		b.enter().append("div")
 		.attr("class", "bill-item")
+		.on("click", dropBill)
 		.append("h2")
 		.attr("id", function(d){ return d; })
 		.html(function(d){
@@ -328,8 +329,7 @@
 	  			console.log(d);
 	  			d3.select("#"+d).html(json.bill_id);
 			});
-		})
-		.on("click", dropBill);
+		});
 	
 		b.exit().remove();
 
