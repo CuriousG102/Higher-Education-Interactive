@@ -19,7 +19,7 @@
 		<div id="repDescriptor" >
 		</div>
 		<img id="zoomOut" src="images/up-arrow-circle-hi.png"/>
-		<h1><span class="bold">DT</span> <br>Interactives</h1>
+		<h1 id="attLink"><span class="bold">DT</span> <br>Interactives</h1>
 	</div>
 	<div id="panel">
 	
@@ -36,9 +36,9 @@
 			<h2 class="title">Higher Education Bills Sponsored</h2>
 		</div>
 		<div class="bills" id="cosponsor">
-			<h2 class="title">HIgher Education Bills Co-sponsored</h2>
+			<h2 class="title">Higher Education Bills Co-sponsored</h2>
 		</div>
-		<div class="close" id="close"><img src="images/up-arrow-circle-hi.png"/></div>
+		<div class="close" id="close" onclick="closeAttribution()"><img src="images/up-arrow-circle-hi.png"/></div>
 
 	</div>
 	<div id="bill-panel">
@@ -75,7 +75,38 @@
 		<div class="close" id="bill-close"><img src="images/up-arrow-circle-hi.png"/></div>
 	</div>
 	<div id="attribution-panel">
-
+		<h2>Made by: </h2>
+		<div class="attContainer">
+			<div class="attPortraitContainer">
+				<img src=""/>
+			</div>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
+		</div>
+		<div class="attContainer">
+			<div class="attPortraitContainer">
+				<img src=""/>
+			</div>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
+		</div>
+		<div class="attContainer">
+			<div class="attPortraitContainer">
+				<img src=""/>
+			</div>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
+		</div>
+		<div class="attContainer">
+			<div class="attPortraitContainer">
+				<img src=""/>
+			</div>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
+		</div>
+		<div class="attContainer">
+			<div class="attPortraitContainer">
+				<img src=""/>
+			</div>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
+		</div>
+		<div class="close" id="attribution-close"><img src="images/up-arrow-circle-hi.png"/></div>
 	</div>
 	<div id="republican-list" class="column"></div>
 </body>
@@ -124,6 +155,12 @@
 
 	d3.select("#bill-close")
 			.on("click", closeBill);
+
+	d3.select("#attribution-close")
+			.on("click", closeAttribution);
+
+	d3.select("#attLink")
+			.on("click", dropAttribution);
 
 	load_senate();
 
@@ -416,6 +453,13 @@
 		.style("top", "-1024px");
 	}
 
+	function closeAttribution() {
+		d3.select("#attribution-panel")
+		.transition()
+		.duration(750)
+		.style("top", "-1024px");
+	}
+
 	function appendPrimary(error, primaryBill) {
 		appendBill(primaryBill, '#primaryBills');
 	}
@@ -485,6 +529,13 @@
 		.append("li")
 		.text(function(d) { return d.committee; });
 		committees.exit().remove();*/
+	}
+
+	function dropAttribution() {
+		d3.select("#attribution-panel")
+		.transition()
+		.duration(750)
+		.style("top", "50px");
 	}
 
 	function reset() {
