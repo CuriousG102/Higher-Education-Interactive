@@ -323,9 +323,14 @@ h4 {
 	width: 200px;
 	/*margin-left: 8px;
 	margin-top: 5px;*/
-	background: #CC5200;
+	
 	text-align: center;
 	float: left;
+	background: #DB864D;
+}
+
+.passed {
+	background: #CC5200;
 }
 
 .dateContainer:hover {
