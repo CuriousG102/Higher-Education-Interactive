@@ -87,6 +87,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
     for legislator in legislators:
         legislator_id_set[legislator['leg_id']] = legislator
         legislator['higher_ed_bills'] = {'primary':[], 'cosponsor':[]}
+        legislator['photo_url'] = 'images/' + legislator['photo_url'].split('images/')[1]
 
 
     bill_fields = "id,sponsors,scraped_subjects"
