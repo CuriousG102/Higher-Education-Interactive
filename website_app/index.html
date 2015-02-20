@@ -518,7 +518,11 @@
 		active.classed("active", false);
 		active = d3.select(this).classed("active", true);
 		d3.select("#zoomOut").classed("active", true).on("click", reset);
-		//d3.select("#repDescriptor").classed("active", true).on("click", dropRep(d.prx`operties.legislator)).html( '<p>' + d.properties.legislator.full_name + '(' + d.properties.legislator.party[0] + ')' + '<br> Expand view' );
+		d3.select("#repDescriptor")
+		.classed("active", true)
+		.data([d.properties.legislator])
+		.on("click", dropRep)
+		.html( '<p>' + d.properties.legislator.full_name + '(' + d.properties.legislator.party[0] + ')' + '<br> Expand view' );
 
 		percent_svg_to_fill = .4;
 
