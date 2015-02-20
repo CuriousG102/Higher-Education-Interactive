@@ -9,8 +9,14 @@
 		<img src="images/nameplate_desktop.png"/>
 		<a class="btn" id="toggleButton" href="house.html">House</a>
 	</div>
-	<div id="democrat-list" class="column"></div>
+	<div id="democrat-list" class="column">
+		<div class="democrat-representative-name">REPUBLICANS</div>
+		<div class="democrat-district-num"></div>
+	</div>
+	</div>
 	<div id="map">
+		<div id="repDescriptor" >
+		</div>
 		<img id="zoomOut" src="images/up-arrow-circle-hi.png"/>
 		<h1><span class="bold">DT</span> <br>Interactives</h1>
 	</div>
@@ -341,9 +347,7 @@
 	function dropRep(d) {
 		console.log(d);
 		closeBill();
-		if(senateIsDisplayed){
-			console.log("WOW");
-		}
+
 		d3.select("#portrait")
 		.attr("src", function() { return d.photo_url.replace("small", "large"); })
 		
@@ -514,6 +518,8 @@
 		active.classed("active", false);
 		active = d3.select(this).classed("active", true);
 		d3.select("#zoomOut").classed("active", true).on("click", reset);
+		//d3.select("#repDescriptor").classed("active", true).on("click", dropRep(d.prx`operties.legislator)).html( '<p>' + d.properties.legislator.full_name + '(' + d.properties.legislator.party[0] + ')' + '<br> Expand view' );
+
 		percent_svg_to_fill = .4;
 
 		var bounds = path.bounds(d),
@@ -559,6 +565,7 @@
 		active.classed("active", false);
 		active = d3.select(null);
 		d3.select("#zoomOut").classed("active", false);
+		d3.select("#repDescriptor").classed("active", false);
 
 		g.transition()
 		.duration(750)

@@ -198,6 +198,7 @@ h4 {
 #zoomOut {
 	width: 40px;
 	height: 40px;
+
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -206,8 +207,34 @@ h4 {
 	z-index: 2;
 	visibility: hidden;
 }
+#repDescriptor {
+	font-weight:bold;
+	border-style: solid;
+	border-width: 6px;
+	width: 200px;
+	height: 40px;
+	padding:15px;
+	position: absolute;
+	border-radius: 20px;
+	top: 0;
+	right: 0;
+	margin-top: 30px;
+	margin-right: 270px;
+	z-index: 2;
+	visibility: hidden;
+	background-color:white;
+	text-align:center;
+	vertical-align: middle;
+	display:table-cell;
+}
+
 
 #zoomOut.active {
+	cursor: pointer;
+	visibility: visible;
+}
+
+#repDescriptor.active {
 	cursor: pointer;
 	visibility: visible;
 }
