@@ -155,7 +155,7 @@
 
 			d3.select("#republican-list")
 			.append("div")
-			.attr("class", "list-item")
+			.attr("class", "list-item select-a-person-item")
 			.append("div")
 			.attr("class", "select-a-person")
 			.html("Select a senator");
@@ -181,7 +181,7 @@
 
 			d3.select("#democrat-list")
 			.append("div")
-			.attr("class", "list-item")
+			.attr("class", "list-item select-a-person-item")
 			.append("div")
 			.attr("class", "select-a-person")
 			.html("Select a senator");
@@ -287,7 +287,7 @@
 		if (d.higher_ed_bills.primary.length != 0) {
 			d3.select("#primary")
 			.append("div")
-			.attr("class", "bill-item")
+			.attr("class", "select-a-bill")
 			.append("h2")
 			.html("Select a bill");
 		}
@@ -313,7 +313,7 @@
 		if (d.higher_ed_bills.cosponsor.length != 0) {
 			d3.select("#cosponsor")
 			.append("div")
-			.attr("class", "bill-item")
+			.attr("class", "select-a-bill")
 			.append("h2")
 			.html("Select a bill");
 		}

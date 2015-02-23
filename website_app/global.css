@@ -296,6 +296,14 @@ h4 {
 	font-size: 16px;
 }
 
+#republican-list .select-a-person-item {
+	background-color: #D05050;
+}
+
+#democrat-list .select-a-person-item {
+	background-color: #5f7ebf;
+}
+
 #republican-list {
 	float: right;
 }
@@ -311,6 +319,18 @@ h4 {
 .list-item:hover{
 	cursor: pointer;
 	background: #D7DBDB;
+}
+
+.select-a-bill {
+	margin: auto;
+	padding: 10px;
+	height: 35px;
+	width: 300px;
+	border-bottom: 1px solid #c7c7cc;
+}
+
+.select-a-bill h2 {
+	margin-top: 8px;
 }
 
 #bill-panel {
