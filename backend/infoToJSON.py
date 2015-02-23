@@ -1,6 +1,7 @@
 import json
 import os
 import io
+import sys
 
 from sunlight import openstates
 import sunlight
@@ -45,7 +46,7 @@ def produceBillJSONFiles(files_destination):
                         f.write(jsonDump)
                     break
         except KeyError:
-            continue
+            print 'ERROR KeyError ' + bill
 
 
 def addToBills(bills):
@@ -100,7 +101,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
                     addSponsorsToSet(legislator_id_set, bill)
                     break
         except KeyError:
-            continue
+            print 'ERROR KeyError ' + bill
 
     decoder = json.JSONDecoder()
     geoJSON = decoder.decode(geoJSONString)
