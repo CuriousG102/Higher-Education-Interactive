@@ -2,6 +2,7 @@
 .sunlight.key
 *.pyc
 ~$copysheet.xlsx
+venv/
 
 #ignore our data
 bills/
