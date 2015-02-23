@@ -1,6 +1,7 @@
 *.DS_STORE
 .sunlight.key
 *.pyc
+~$copysheet.xlsx
 
 #ignore our data
 bills/
