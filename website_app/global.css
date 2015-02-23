@@ -571,8 +571,15 @@ h4 {
 }
 
 .attContainer {
+	width: 200px;
+	margin-right: 10px;
 	margin-top: 10px;
 	display: inline-block;
+}
+
+.attContainer h3 {
+	margin-top: 7px;
+	text-align: center;
 }
 
 .attPortraitContainer {
@@ -582,7 +589,8 @@ h4 {
 	border-style: solid;
 	border-width: 2px;
 	overflow: hidden;
-	margin-left: 26px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #attribution-panel h2 {
@@ -590,12 +598,12 @@ h4 {
 	margin-left: 10px;
 }
 
-#attribution-panel h3 {
-	margin-left: 40px;
-	margin-top: 10px;
-}
-
 #attLink:hover {
 	color: #d7dbdb;
 	cursor: pointer;
+}
+
+#sunlightFoundationAttribution {
+	margin-left: 30px;
+	margin-top: 10px;
 }

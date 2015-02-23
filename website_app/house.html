@@ -71,7 +71,7 @@
 		<h2>Made by: </h2>
 		<div class="attContainer">
 			<div class="attPortraitContainer">
-				<img src=""/>
+				<img src="images/Miles.jpg"/>
 			</div>
 			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
 		</div>
@@ -79,25 +79,19 @@
 			<div class="attPortraitContainer">
 				<img src=""/>
 			</div>
-			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Eleanor Dearman</h3></a>
+		</div>
+		<div class="attContainer">
+			<div class="attPortraitContainer">
+				<img src="images/Alan.jpg"/>
+			</div>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Alan Ma</h3></a>
 		</div>
 		<div class="attContainer">
 			<div class="attPortraitContainer">
 				<img src=""/>
 			</div>
-			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
-		</div>
-		<div class="attContainer">
-			<div class="attPortraitContainer">
-				<img src=""/>
-			</div>
-			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
-		</div>
-		<div class="attContainer">
-			<div class="attPortraitContainer">
-				<img src=""/>
-			</div>
-			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Miles Hutson</h3></a>
+			<a href="http://www.dailytexanonline.com/author/miles-hutson"><h3>Amanda Voeller</h3></a>
 		</div>
 		<div class="close" id="attribution-close"><img src="images/up-arrow-circle-hi.png"/></div>
 	</div>
@@ -306,6 +300,9 @@
 		d3.select("#address")
 		.html("Capitol Address: "+d.offices[0].address);
 
+		d3.select("#primary")
+		.selectAll("div").remove();
+
 		var a = d3.select("#primary")
 		.selectAll("div")
 		.data(d.higher_ed_bills.primary, function(d) { return d; });
@@ -329,8 +326,9 @@
 	  			d3.select("#"+d).html(json.bill_id);
 			});
 		});
-	
-		a.exit().remove();
+
+		d3.select("#cosponsor")
+		.selectAll("div").remove();
 
 		var b = d3.select("#cosponsor")
 		.selectAll("div")
@@ -356,8 +354,6 @@
 	  			d3.select("#"+d).html(json.bill_id);
 			});
 		});
-	
-		b.exit().remove();
 
 		d3.select("#panel")
 		.transition()
