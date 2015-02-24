@@ -3,6 +3,7 @@
 *.pyc
 ~$copysheet.xlsx
 venv/
+test/
 
 #ignore our data
 bills/
