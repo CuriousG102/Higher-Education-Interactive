@@ -408,6 +408,11 @@
   			d3.select("#signedContainer").classed("passed", json.action_dates.signed);
   			d3.select("#signedDate").html(formatDate(json.action_dates.signed));
 
+  			d3.select("#billTexts")
+  							  .select("ul")
+  							  .selectAll("li")
+  							  .remove()
+
   			// add links to all the version of the bill
   			var billTexts = d3.select("#billTexts")
   							  .select("ul")
@@ -419,8 +424,6 @@
   			.attr("href", function(d) { return d.url; })
   			.attr("class", "billTextLink")
   			.html(function(d) { return d.name; });
-
-  			billTexts.exit().remove();
 
   			d3.select("#bill-summary-head").html(function() { if (json["Bill Summary"] == "") return "";
   		                                                 else return "Bill Summary";});
