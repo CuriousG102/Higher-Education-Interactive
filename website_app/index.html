@@ -437,6 +437,7 @@
   			.append("a")
   			.attr("href", function(d) { return d.url; })
   			.attr("class", "billTextLink")
+  			.attr("target", "_blank")
   			.html(function(d) { return d.name; });
 
   			d3.select("#bill-summary-head").html(function() { if (json["Bill Summary"] == "") return "";
