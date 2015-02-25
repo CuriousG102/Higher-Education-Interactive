@@ -497,6 +497,13 @@ h4 {
     width: 450px;
 }
 
+.information #specialNote {
+	color: red;
+	margin-right: 100px;
+	margin-left: 100px;
+	margin-top: 5px;
+}
+
 .information #party {
 	margin: 4px 0;
 }

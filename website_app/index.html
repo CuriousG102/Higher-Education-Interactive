@@ -31,6 +31,7 @@
 		</div>
 		<div class="information">
 			<h1 id="name"></h1>
+			<h4 id="specialNote"></h4>
 			<h4 id="address"></h4>
 			<h4 id="higher-ed"><h4>
 			<h4 id="party"></h4>
@@ -309,6 +310,11 @@
 
 		d3.select("#name")
 		.html(d.full_name);
+
+		d3.select("#specialNote")
+		.html(function() { if ( !(d["Special Note"] == "") ) {
+			                	return "Special Note: " + d["Special Note"];
+			                } else { return ""; }});
 
 		d3.select("#party")
 		.html("Party: "+d.party);
