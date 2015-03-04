@@ -101,7 +101,7 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
                     addSponsorsToSet(legislator_id_set, bill)
                     break
         except KeyError:
-            print 'ERROR KeyError ' + bill
+            print 'ERROR KeyError ' + str(bill)
 
     decoder = json.JSONDecoder()
     geoJSON = decoder.decode(geoJSONString)
