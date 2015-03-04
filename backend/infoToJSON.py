@@ -46,7 +46,7 @@ def produceBillJSONFiles(files_destination):
                         f.write(jsonDump)
                     break
         except KeyError:
-            print 'ERROR KeyError ' + bill
+            print 'ERROR KeyError ' + str(bill)
 
 
 def addToBills(bills):
