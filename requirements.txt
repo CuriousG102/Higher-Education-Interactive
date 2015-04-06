@@ -1,0 +1,3 @@
+openpyxl==2.1.4
+sunlight==1.2.8
+XslxWriter==0.6.6
