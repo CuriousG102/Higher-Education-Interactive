@@ -113,7 +113,12 @@ def produceEnhancedDistrictJSONString(geoJSONString, chamber_string):
     districts = geoJSON['objects'][chamberName]['geometries']
     legislator_district_set = {}
     for legislator in legislators:
-        legislator_district_set[int(legislator['district'])] = legislator
+        try:
+            legislator_district_set[int(legislator['district'])] = legislator
+        except KeyError: # someone without a district, lt. governor, etc.
+            print "'legislator' without district: %s" % str(legislator)
+            continue
+
     for district in districts:
         if int(district['id']) in legislator_district_set:
             district['properties'] = {}
